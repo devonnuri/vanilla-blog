@@ -1,0 +1,25 @@
+scalar Date
+
+type User {
+    displayName: String!
+    username: String!
+    email: String!
+    password: String!
+    createdAt: Date!
+}
+
+type Post {
+    title: String!
+    body: String!
+    author: User!
+    createdAt: Date!
+}
+
+type Query {
+    user(displayName: String, username: String, email: String): [User]!
+}
+
+type Mutation {
+    addUser(displayName: String!, username: String!, email: String!, password: String!): User
+    addPost(title: String!, body: String!, author: String!): Post
+}
