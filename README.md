@@ -11,12 +11,4 @@
 
 ## Todo-List
 
-* Backend
-    * [*] graphql-yoga로 GraphQL 기본 틀 만들기
-    * [*] mongodb 틀 잡기
-    * [*] `User`의 Schema, Model, Resolver 만들기
-    * [*] `Post`의 Schema, Model, Resolver 만들기
-* Frontend
-    * [ ] CRA로 기본적인 틀 만들기
-    * [ ] react-router로 라우터 만들기
-    * [ ] eject한뒤 webpack에서 scss 설정하기
+[트렐로](https://trello.com/b/hNA5Hj3K)에서 진행상황을 누구나 볼 수 있다.

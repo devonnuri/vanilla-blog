@@ -11,15 +11,16 @@ type User {
 type Post {
     title: String!
     body: String!
-    author: User!
+    author: String!
     createdAt: Date!
 }
 
 type Query {
-    user(displayName: String, username: String, email: String): [User]!
+    user(_id: ID, displayName: String, username: String, email: String): [User]!
+    post(title: String, body: String, author: ID): [Post]!
 }
 
 type Mutation {
     addUser(displayName: String!, username: String!, email: String!, password: String!): User
-    addPost(title: String!, body: String!, author: String!): Post
+    addPost(title: String!, body: String!, author: ID!): Post
 }
