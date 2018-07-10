@@ -14,6 +14,8 @@
 * Backend
     * [*] graphql-yoga로 GraphQL 기본 틀 만들기
     * [*] mongodb 틀 잡기
+    * [*] `User`의 Schema, Model, Resolver 만들기
+    * [*] `Post`의 Schema, Model, Resolver 만들기
 * Frontend
     * [ ] CRA로 기본적인 틀 만들기
     * [ ] react-router로 라우터 만들기
