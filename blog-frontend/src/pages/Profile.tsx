@@ -1,9 +1,11 @@
 import React from 'react';
 
-const Profile = () => {
+import { match as Match } from 'react-router-dom';
+
+const Profile = ({ match }: { match: Match<any> }) => {
   return (
     <div>
-      <h1>Profile</h1>
+      <h1>Profile of {match.params.username}</h1>
     </div>
   );
 };
