@@ -16,11 +16,28 @@ const Item = styled.div`
   text-overflow: ellipsis;
 `;
 
+const ImageWrapper = styled.div`
+  width: 15rem;
+  height: 15rem;
+  flex-shrink: 0;
+
+  overflow: hidden;
+`;
+
 const Image = styled.img`
   width: 15rem;
+  height: 15rem;
+
+  position: relative;
 
   float: left;
   object-fit: cover;
+
+  transition: ease-in-out 0.1s all;
+
+  &:hover {
+    transform: scale(1.5) rotate(20deg);
+  }
 `;
 
 const Info = styled.div`
@@ -45,7 +62,9 @@ const Home = () => {
   return (
     <Container>
       <Item>
-        <Image src={imageURL} />
+        <ImageWrapper>
+          <Image src={imageURL} />
+        </ImageWrapper>
         <Info>
           <Title>ㅁㄴㅇㄹ</Title>
           <Description>
@@ -55,7 +74,9 @@ const Home = () => {
         </Info>
       </Item>
       <Item>
-        <Image src={anotherImageURL} />
+        <ImageWrapper>
+          <Image src={anotherImageURL} />
+        </ImageWrapper>
         <Info>
           <Title>ㅁㄴㅇㄹ</Title>
           <Description>
