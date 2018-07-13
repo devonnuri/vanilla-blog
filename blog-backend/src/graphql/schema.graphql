@@ -1,26 +1,15 @@
 scalar Date
 
-type User {
-    displayName: String!
-    username: String!
-    email: String!
-    password: String!
-    createdAt: Date!
-}
-
 type Post {
     title: String!
     body: String!
-    author: String!
     createdAt: Date!
 }
 
 type Query {
-    user(_id: ID, displayName: String, username: String, email: String): [User]!
-    post(title: String, body: String, author: ID): [Post]!
+    post(title: String, body: String): [Post]!
 }
 
 type Mutation {
-    addUser(displayName: String!, username: String!, email: String!, password: String!): User
-    addPost(title: String!, body: String!, author: ID!): Post
+    addPost(title: String!, body: String!): Post
 }

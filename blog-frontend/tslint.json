@@ -7,6 +7,19 @@
     ]
   },
   "rules": {
-    "no-unused-variable": false
+    "no-unused-variable": false,
+    "object-literal-sort-keys": false,
+    "trailing-comma": [
+      true,
+      {
+        "multiline": {
+          "objects": "always",
+          "arrays": "never",
+          "functions": "never",
+          "typeLiterals": "ignore"
+        },
+        "esSpecCompliant": true
+      }
+    ]
   }
 }
