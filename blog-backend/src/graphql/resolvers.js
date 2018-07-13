@@ -5,11 +5,9 @@ const resolvers = {
     post: async (_, args) => Post.find(args),
   },
   Mutation: {
-    addPost: (_, { title, body, author }) => {
+    addPost: (_, args) => {
       const post = new Post({
-        title,
-        body,
-        author,
+        ...args,
         createdAt: new Date(),
       });
       post.save();
