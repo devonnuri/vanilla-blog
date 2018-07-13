@@ -12,15 +12,17 @@ const Header = styled.div`
 
 const Title = styled.h1`
   margin: 0;
-  padding: 1rem 2rem;
+  padding: 0.5rem 1.5rem;
 
   border: 2px solid white;
   border-radius: 7px;
 
   display: inline-block;
 
-  font-size: 5em;
-  font-weight: 500;
+  font-family: 'Lobster';
+  font-weight: normal;
+
+  font-size: 4em;
   background-image: linear-gradient(
     135deg,
     rgba(255, 255, 255, 0.5) 10%,
@@ -31,7 +33,7 @@ const Title = styled.h1`
 export default () => {
   return (
     <Header>
-      <Title>뎁온누리</Title>
+      <Title>DevonLog</Title>
     </Header>
   );
 };
