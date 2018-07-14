@@ -4,7 +4,7 @@ import gql from 'graphql-tag';
 
 import Item from '../components/Item';
 
-interface IQuery {
+interface IPost {
   id: number;
   title: string;
   body: string;
@@ -36,15 +36,19 @@ const Home = () => {
         if (data.post.length < 1) {
           return <h1>아직 포스트가 없네요 ㅠㅠ</h1>;
         }
-        return data.post.map((post: IQuery) => (
-          <Item
-            key={post.id}
-            id={post.id}
-            title={post.title}
-            body={post.body}
-            createdAt={post.createdAt}
-          />
-        ));
+
+        return data.post
+          .slice()
+          .sort((a: IPost, b: IPost) => b.id - a.id)
+          .map((post: IPost) => (
+            <Item
+              key={post.id}
+              id={post.id}
+              title={post.title}
+              body={post.body}
+              createdAt={post.createdAt}
+            />
+          ));
       }}
     </Query>
   );
