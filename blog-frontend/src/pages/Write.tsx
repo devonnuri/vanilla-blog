@@ -88,17 +88,17 @@ export default class Write extends React.Component<any, any> {
   public render() {
     return (
       <Mutation mutation={mutation}>
-        {(addPost, { data }) => (
+        {addPost => (
           <form
             onSubmit={e => {
               e.preventDefault();
-              /* tslint:disable */
-              console.log(this.state.title);
               addPost({
                 variables: {
                   title: this.state.title,
-                  body: this.state.mdeState.markdown
-                }
+                  body: this.state.mdeState.markdown,
+                },
+              }).then(({ data }: any) => {
+                this.props.history.push(`/${data.addPost.id}`);
               });
             }}
           >
