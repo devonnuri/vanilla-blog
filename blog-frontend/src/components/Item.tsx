@@ -43,7 +43,7 @@ const Info = styled.div`
   padding: 2rem;
 `;
 
-const Title = styled.h2`
+const Title = styled.h1`
   margin: 0;
 `;
 

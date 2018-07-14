@@ -1,38 +1,53 @@
 import React from 'react';
+import { Query } from 'react-apollo';
+import gql from 'graphql-tag';
 
 import ReactMarkdown from 'react-markdown';
 import { match as Match } from 'react-router-dom';
 
-const posts = [
-  {
-    id: 1,
-    title: 'First Post',
-    body: 'This is the body',
-  },
-  {
-    id: 2,
-    title: 'Second Post',
-    body: 'This is the **second** body~',
-  },
-];
-
-const Post = ({ match }: { match: Match<any> }) => {
-  const query = posts.filter(post => Number(match.params.postId) === post.id);
-
-  if (query.length < 1) {
-    return (
-      <div>
-        <h1>해당 포스트는 존재하지 않습니다.</h1>
-      </div>
-    );
+const query = gql`
+  query getPost($postId: Int!) {
+    post(id: $postId) {
+      title
+      body
+      createdAt
+    }
   }
+`;
 
-  const { title, body } = query[0];
+const Post = ({
+  match: {
+    params: { postId },
+  },
+}: {
+  match: Match<any>;
+}) => {
+  // match.params.postId
   return (
-    <div>
-      <h1>{title}</h1>
-      <ReactMarkdown source={body} />
-    </div>
+    <Query query={query} variables={{ postId }}>
+      {({ loading, data, error }) => {
+        if (loading) {
+          return <h3>Loading</h3>;
+        }
+        if (error) {
+          return <h3>Error Occurred</h3>;
+        }
+
+        if (data.post.length < 1) {
+          return <h2>존재하지 않는 포스트입니다.</h2>;
+        }
+
+        const post = data.post[0];
+
+        return (
+          <div>
+            <h1>{post.title}</h1>
+            <p>{new Date(post.createdAt).toLocaleString()}</p>
+            <ReactMarkdown source={post.body} />
+          </div>
+        );
+      }}
+    </Query>
   );
 };
 
