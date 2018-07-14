@@ -1,6 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 
+const LinkContainer = styled.a`
+  text-decoration: none;
+  color: inherit;
+`;
+
 const ItemContainer = styled.div`
   display: flex;
 
@@ -54,29 +59,32 @@ const Body = styled.p`
 const CreatedAt = styled.span``;
 
 interface IProps {
+  id: number;
   title: string;
   body: string;
   imageURL?: string;
   createdAt?: Date;
 }
 
-const Item: React.SFC<IProps> = ({ title, body, imageURL, createdAt }) => {
+const Item: React.SFC<IProps> = ({ id, title, body, imageURL, createdAt }) => {
   return (
-    <ItemContainer>
-      {imageURL ? (
-        <ImageWrapper>
-          <Image src={imageURL} />
-        </ImageWrapper>
-      ) : (
-        ''
-      )}
+    <LinkContainer href={`/${id}`}>
+      <ItemContainer>
+        {imageURL ? (
+          <ImageWrapper>
+            <Image src={imageURL} />
+          </ImageWrapper>
+        ) : (
+          ''
+        )}
 
-      <Info>
-        <Title>{title}</Title>
-        <Body>{body}</Body>
-        {createdAt ? <CreatedAt>{new Date(createdAt).toLocaleString()}</CreatedAt> : ''}
-      </Info>
-    </ItemContainer>
+        <Info>
+          <Title>{title}</Title>
+          <Body>{body}</Body>
+          {createdAt ? <CreatedAt>{new Date(createdAt).toLocaleString()}</CreatedAt> : ''}
+        </Info>
+      </ItemContainer>
+    </LinkContainer>
   );
 };
 

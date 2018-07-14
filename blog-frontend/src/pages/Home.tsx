@@ -37,7 +37,13 @@ const Home = () => {
           return <h1>아직 포스트가 없네요 ㅠㅠ</h1>;
         }
         return data.post.map((post: IQuery) => (
-          <Item key={post.id} title={post.title} body={post.body} createdAt={post.createdAt} />
+          <Item
+            key={post.id}
+            id={post.id}
+            title={post.title}
+            body={post.body}
+            createdAt={post.createdAt}
+          />
         ));
       }}
     </Query>
