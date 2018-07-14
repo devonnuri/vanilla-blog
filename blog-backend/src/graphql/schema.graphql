@@ -1,7 +1,7 @@
 scalar Date
 
 type Post {
-    _id: String!
+    id: Int!
     title: String!
     body: String!
     createdAt: Date!
