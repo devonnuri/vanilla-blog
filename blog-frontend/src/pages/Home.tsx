@@ -11,6 +11,7 @@ import Item from '../components/Item';
 //   'https://images.unsplash.com/photo-1506361797048-46a149213205?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=493e200df17b54d1ef10eb61e1df148a&w=1000&q=80';
 
 interface IQuery {
+  _id: string;
   title: string;
   body: string;
   createdAt: Date;
@@ -22,6 +23,7 @@ const Home = () => {
       query={gql`
         {
           post {
+            _id
             title
             body
             createdAt
@@ -31,14 +33,14 @@ const Home = () => {
     >
       {({ loading, data, error }) => {
         if (loading) {
-          return 'Loading...';
+          return <h3>Loading</h3>;
         }
         if (error) {
-          return 'Error Occurred';
+          return <h3>Error Occurred</h3>;
         }
 
         return data.post.map((post: IQuery) => (
-          <Item title={post.title} body={post.body} createdAt={post.createdAt} />
+          <Item key={post._id} title={post.title} body={post.body} createdAt={post.createdAt} />
         ));
       }}
     </Query>
