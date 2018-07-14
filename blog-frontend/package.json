@@ -36,6 +36,7 @@
     "react-markdown": "^3.3.4",
     "react-mde": "^5.7.0",
     "react-router-dom": "^4.3.1",
+    "remove-markdown": "^0.3.0",
     "resolve": "1.6.0",
     "showdown": "^1.8.6",
     "source-map-loader": "^0.2.1",
@@ -68,6 +69,7 @@
     "@types/react-dom": "^16.0.6",
     "@types/react-helmet": "^5.0.6",
     "@types/react-router-dom": "^4.2.7",
+    "@types/remove-markdown": "^0.1.1",
     "@types/showdown": "^1.7.5",
     "typescript": "^2.9.2"
   },

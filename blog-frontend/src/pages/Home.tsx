@@ -4,6 +4,8 @@ import gql from 'graphql-tag';
 
 import Item from '../components/Item';
 
+import removeMd from 'remove-markdown';
+
 interface IPost {
   id: number;
   title: string;
@@ -45,7 +47,7 @@ const Home = () => {
               key={post.id}
               id={post.id}
               title={post.title}
-              body={post.body}
+              body={removeMd(post.body)}
               createdAt={post.createdAt}
             />
           ));
