@@ -3,10 +3,12 @@ import { Route, Switch } from 'react-router-dom';
 import styled from 'styled-components';
 
 import Header from './components/Header';
-import { Home, Post } from './pages';
+import { Home, Post, Write } from './pages';
 
 import { ApolloProvider } from 'react-apollo';
 import Client from './api/Client';
+
+import { Helmet } from 'react-helmet';
 
 const RootContainer = styled.div`
   font-family: 'Noto Sans KR', sans-serif;
@@ -40,11 +42,16 @@ class App extends React.Component {
   public render() {
     return (
       <RootContainer>
+        <Helmet>
+          <title>뎁온.로그</title>
+        </Helmet>
+
         <Header />
         <ApolloProvider client={Client}>
           <Container>
             <Route exact={true} path="/" component={Home} />
             <Switch>
+              <Route path="/write" component={Write} />
               <Route path="/:postId" component={Post} />
             </Switch>
           </Container>
