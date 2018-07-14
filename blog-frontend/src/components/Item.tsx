@@ -1,0 +1,83 @@
+import React from 'react';
+import styled from 'styled-components';
+
+const ItemContainer = styled.div`
+  display: flex;
+
+  max-height: 15rem;
+  margin: 3rem 0;
+
+  border-radius: 5px;
+  box-shadow: 3px 3px 15px 0px black;
+  background-image: linear-gradient(135deg, #affef4 10%, #b9b7ff 100%);
+  overflow: hidden;
+`;
+
+const ImageWrapper = styled.div`
+  width: 15rem;
+  height: 15rem;
+  flex-shrink: 0;
+
+  overflow: hidden;
+`;
+
+const Image = styled.img`
+  width: 15rem;
+  height: 15rem;
+
+  position: relative;
+
+  float: left;
+  object-fit: cover;
+
+  transition: ease-in-out 0.1s all;
+
+  &:hover {
+    transform: scale(1.5) rotate(20deg);
+  }
+`;
+
+const Info = styled.div`
+  float: left;
+
+  padding: 2rem;
+`;
+
+const Title = styled.h2`
+  margin: 0;
+`;
+
+const Body = styled.p`
+  text-overflow: ellipsis;
+`;
+
+const CreatedAt = styled.span``;
+
+interface IProps {
+  title: string;
+  body: string;
+  imageURL?: string;
+  createdAt?: Date;
+}
+
+const Item: React.SFC<IProps> = ({ title, body, imageURL, createdAt }) => {
+  return (
+    <ItemContainer>
+      {imageURL ? (
+        <ImageWrapper>
+          <Image src={imageURL} />
+        </ImageWrapper>
+      ) : (
+        ''
+      )}
+
+      <Info>
+        <Title>{title}</Title>
+        <Body>{body}</Body>
+        {createdAt ? <CreatedAt>{new Date(createdAt).toLocaleString()}</CreatedAt> : ''}
+      </Info>
+    </ItemContainer>
+  );
+};
+
+export default Item;

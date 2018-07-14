@@ -17,7 +17,17 @@ const posts = [
 ];
 
 const Post = ({ match }: { match: Match<any> }) => {
-  const { title, body } = posts[match.params.postId];
+  const query = posts.filter(post => Number(match.params.postId) === post.id);
+
+  if (query.length < 1) {
+    return (
+      <div>
+        <h1>해당 포스트는 존재하지 않습니다.</h1>
+      </div>
+    );
+  }
+
+  const { title, body } = query[0];
   return (
     <div>
       <h1>{title}</h1>

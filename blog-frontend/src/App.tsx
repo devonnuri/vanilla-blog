@@ -5,6 +5,9 @@ import styled from 'styled-components';
 import Header from './components/Header';
 import { Home, Post } from './pages';
 
+import { ApolloProvider } from 'react-apollo';
+import Client from './api/Client';
+
 const RootContainer = styled.div`
   font-family: 'Noto Sans KR', sans-serif;
 `;
@@ -38,12 +41,14 @@ class App extends React.Component {
     return (
       <RootContainer>
         <Header />
-        <Container>
-          <Route exact={true} path="/" component={Home} />
-          <Switch>
-            <Route path="/:postId" component={Post} />
-          </Switch>
-        </Container>
+        <ApolloProvider client={Client}>
+          <Container>
+            <Route exact={true} path="/" component={Home} />
+            <Switch>
+              <Route path="/:postId" component={Post} />
+            </Switch>
+          </Container>
+        </ApolloProvider>
       </RootContainer>
     );
   }

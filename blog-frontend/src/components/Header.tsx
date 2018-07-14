@@ -10,7 +10,7 @@ const Header = styled.div`
   background-image: linear-gradient(135deg, #f761a1 10%, #8c1bab 100%);
 `;
 
-const Title = styled.h1`
+const Title = styled.a`
   margin: 0;
   padding: 0.5rem 1.5rem;
 
@@ -19,21 +19,23 @@ const Title = styled.h1`
 
   display: inline-block;
 
-  font-family: 'Lobster';
-  font-weight: normal;
-
-  font-size: 4em;
+  color: inherit;
   background-image: linear-gradient(
     135deg,
-    rgba(255, 255, 255, 0.5) 10%,
+    rgba(255, 255, 255, 0.4) 10%,
     rgba(255, 255, 255, 0.7) 100%
   );
+
+  font-family: 'Lobster';
+  font-weight: normal;
+  font-size: 4em;
+  text-decoration: none;
 `;
 
 export default () => {
   return (
     <Header>
-      <Title>DevonLog</Title>
+      <Title href="/">DevonLog</Title>
     </Header>
   );
 };
