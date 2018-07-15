@@ -4,7 +4,8 @@
   "main": "src/index.js",
   "scripts": {
     "start:dev": "nodemon --watch *.js --watch *.graphql --exec babel-node src/index.js",
-    "start:db": "mongod --dbpath ../blog-mongodb/"
+    "start:db": "mongod --dbpath ../blog-mongodb/",
+    "build": "rm -rf build/* && babel src --out-dir build"
   },
   "license": "MIT",
   "devDependencies": {
@@ -15,6 +16,7 @@
     "prettier-eslint": "^8.8.2"
   },
   "dependencies": {
+    "dotenv": "^6.0.0",
     "graphql-yoga": "^1.14.12",
     "mongoose": "^5.2.1"
   }

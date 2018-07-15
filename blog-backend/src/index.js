@@ -1,7 +1,10 @@
 import { GraphQLServer } from 'graphql-yoga';
 import mongoose from 'mongoose';
+import { config } from 'dotenv';
 
 import resolvers from './graphql/resolvers';
+
+config();
 
 const server = new GraphQLServer({
   typeDefs: './src/graphql/schema.graphql',
@@ -9,7 +12,7 @@ const server = new GraphQLServer({
 });
 
 mongoose.connect(
-  'mongodb://localhost:27017/admin',
+  process.env.MONGO_SERVER,
   { useNewUrlParser: true },
 );
 

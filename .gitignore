@@ -2,3 +2,5 @@ blog-mongodb/
 yarn*
 *.log
 node_modules/
+.env
+build/
