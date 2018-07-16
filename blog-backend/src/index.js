@@ -1,13 +1,39 @@
+import 'babel-polyfill';
+
 import { GraphQLServer } from 'graphql-yoga';
 import mongoose from 'mongoose';
-import { config } from 'dotenv';
 
+import { https } from 'firebase-functions';
+import { exists, readFile } from 'mz/fs';
 import resolvers from './graphql/resolvers';
 
-config();
+const typeDefs = `
+scalar Date
+
+type Post {
+  id: Int!
+  title: String!
+  body: String!
+  createdAt: Date!
+}
+
+type Query {
+  post(id: Int, title: String, body: String): [Post]!
+}
+
+type Mutation {
+  addPost(title: String!, body: String!): Post
+}
+`;
+
+exists('../.env')
+  .then(isExists => (isExists ? readFile('../.env') : null))
+  .then((env) => {
+    process.env.MONGO_SERVER = env;
+  });
 
 const server = new GraphQLServer({
-  typeDefs: './src/graphql/schema.graphql',
+  typeDefs,
   resolvers,
 });
 
@@ -18,8 +44,9 @@ mongoose.connect(
 
 mongoose.connection.once('open', () => {
   console.log('[*] Database Connected');
-
   server.start(() => {
     console.log('[*] GraphQL Server Started');
   });
 });
+
+export default https.onRequest(server.express);

@@ -1,8 +1,6 @@
 {
-    "extends": "airbnb-base",
-    "rules": {
-        "no-unused-vars": "warn",
-        "linebreak-style": ["error"],
-        "no-console": "off"
-    }
+  "extends": "airbnb-base",
+  "rules": {
+    "no-console": "off"
+  }
 }
