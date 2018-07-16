@@ -19,8 +19,6 @@
   },
   "dependencies": {
     "babel-polyfill": "^6.26.0",
-    "firebase-admin": "^5.12.1",
-    "firebase-functions": "^1.1.0",
     "graphql-yoga": "^1.14.12",
     "mongoose": "^5.2.1",
     "mz": "^2.7.0"

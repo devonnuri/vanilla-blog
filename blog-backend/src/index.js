@@ -3,7 +3,6 @@ import 'babel-polyfill';
 import { GraphQLServer } from 'graphql-yoga';
 import mongoose from 'mongoose';
 
-import { https } from 'firebase-functions';
 import { exists, readFile } from 'mz/fs';
 import resolvers from './graphql/resolvers';
 
@@ -48,5 +47,3 @@ mongoose.connection.once('open', () => {
     console.log('[*] GraphQL Server Started');
   });
 });
-
-export default https.onRequest(server.express);
