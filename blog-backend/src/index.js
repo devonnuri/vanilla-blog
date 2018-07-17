@@ -25,24 +25,24 @@ type Mutation {
 }
 `;
 
-exists('../.env')
-  .then(isExists => (isExists ? readFile('../.env') : null))
-  .then((env) => {
-    process.env.MONGO_SERVER = env;
-  });
-
 const server = new GraphQLServer({
   typeDefs,
   resolvers,
 });
 
-mongoose.connect(
-  process.env.MONGO_SERVER,
-  { useNewUrlParser: true },
-);
+exists('.env')
+  .then(isExists => (isExists ? readFile('.env', 'utf8') : null))
+  .then((env) => {
+    mongoose.connect(
+      env || process.env.MONGO_URI,
+      {
+        useNewUrlParser: true,
+      },
+    );
+  });
 
 mongoose.connection.once('open', () => {
-  console.log('[*] Database Connected');
+  console.log('[*] MongoDB Connected');
   server.start(() => {
     console.log('[*] GraphQL Server Started');
   });
