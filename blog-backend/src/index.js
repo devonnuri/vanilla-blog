@@ -46,6 +46,7 @@ mongoose.connection.once('open', () => {
   graphQLServer.start(
     {
       playground: false,
+      port: 8080,
     },
     () => {
       console.log('[*] GraphQL Server Started');
