@@ -25,7 +25,7 @@ type Mutation {
 }
 `;
 
-const server = new GraphQLServer({
+const graphQLServer = new GraphQLServer({
   typeDefs,
   resolvers,
 });
@@ -43,7 +43,12 @@ exists('.env')
 
 mongoose.connection.once('open', () => {
   console.log('[*] MongoDB Connected');
-  server.start(() => {
-    console.log('[*] GraphQL Server Started');
-  });
+  graphQLServer.start(
+    {
+      playground: false,
+    },
+    () => {
+      console.log('[*] GraphQL Server Started');
+    },
+  );
 });
