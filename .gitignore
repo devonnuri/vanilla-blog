@@ -4,3 +4,4 @@ yarn*
 node_modules/
 .env
 build/
+lib/
