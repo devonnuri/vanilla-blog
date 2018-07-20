@@ -9,17 +9,28 @@ export const listPost = async (_, response: Response) => {
 };
 
 export const readPost = async (request: Request, response: Response) => {
-  response.json(
-    await Post.findOne({
-      id: request.params.postId,
-    })
-  );
+  const post = await Post.findOne({
+    id: request.params.postId,
+  });
+
+  if (post) {
+    response.json(post);
+  } else {
+    response.status(404).json({
+      name: 'POST_NOT_FOUND',
+    });
+  }
 };
 
 export const writePost = async (request: Request, response: Response) => {
   const schema = Joi.object().keys({
-    title: Joi.string().required(),
-    body: Joi.string().required(),
+    title: Joi.string()
+      .required()
+      .min(1)
+      .max(120),
+    body: Joi.string()
+      .required()
+      .min(1),
   });
 
   if (!validateSchema(request, response, schema)) {
