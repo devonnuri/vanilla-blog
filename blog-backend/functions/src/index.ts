@@ -4,7 +4,7 @@ import * as bodyParser from 'body-parser';
 import * as mongoose from 'mongoose';
 import { existsSync, readFileSync } from 'fs';
 
-import Posts from './routes/Posts';
+import Posts from './routes/posts/';
 
 if (existsSync('.env')) {
   mongoose.connect(

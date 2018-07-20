@@ -1,10 +1,10 @@
-import mongoose, { Schema } from 'mongoose';
+import { Schema, model } from 'mongoose';
 
 const post = new Schema({
   id: Number,
   title: String,
   body: String,
-  createdAt: Date,
+  createdAt: Date
 });
 
-export default mongoose.model('Post', post);
+export default model('Post', post);
