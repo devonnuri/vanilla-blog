@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import Joi from '../../lib/Joi';
+import * as Joi from 'joi';
 
 import Post from '../../models/Post';
 import { validateSchema } from '../../lib/common';
@@ -11,7 +11,7 @@ export const listPost = async (_, response: Response) => {
 export const readPost = async (request: Request, response: Response) => {
   response.json(
     await Post.findOne({
-      id: request.params.id,
+      id: request.params.postId,
     })
   );
 };

@@ -10,7 +10,7 @@ if (existsSync('.env')) {
   mongoose.connect(
     readFileSync('.env', 'utf8'),
     {
-      useNewUrlParser: true,
+      useNewUrlParser: true
     }
   );
 }
