@@ -4,10 +4,18 @@
 
 다른 프레임워크를 사용하지 않고 블로그를 만들어보자.
 
-## How?
+## Stack
+### Frontend
+* [react](https://reactjs.org/)
+* [react-router](https://reacttraining.com/react-router/)
+* [styled-components](https://www.styled-components.com/)
+* [typescript](https://www.typescriptlang.org/)
 
-* 프론트엔드: [ReactJS](https://reactjs.org) + [React Router](https://github.com/ReactTraining/react-router) + [GraphQL](https://graphql.org/)
-* 백엔드: [GraphQL Yoga](https://www.prisma.io/docs/graphql-ecosystem/graphql-yoga/overview-chaha122ho/) + [MongoDB](https://www.mongodb.com)
+### Backend
+* [express](expressjs.com)
+* [mongodb](https://www.mongodb.com/) [(mongoose)](http://mongoosejs.com/)
+* [typescript](https://www.typescriptlang.org/)
+
 
 ## Todo-List
 
