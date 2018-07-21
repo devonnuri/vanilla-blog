@@ -1,4 +1,4 @@
-import { Router, IRouterHandler } from 'express';
+import { Router } from 'express';
 
 import * as postsCtrl from './posts.ctrl';
 

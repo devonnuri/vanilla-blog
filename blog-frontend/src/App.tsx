@@ -5,9 +5,6 @@ import styled from 'styled-components';
 import Header from './components/Header';
 import { Home, Post, Write } from './pages';
 
-import { ApolloProvider } from 'react-apollo';
-import Client from './api/Client';
-
 import { Helmet } from 'react-helmet';
 
 const RootContainer = styled.div`
@@ -51,15 +48,13 @@ class App extends React.Component {
         </Helmet>
 
         <Header />
-        <ApolloProvider client={Client}>
-          <Container>
-            <Route exact={true} path="/" component={Home} />
-            <Switch>
-              <Route path="/write" component={Write} />
-              <Route path="/:postId" component={Post} />
-            </Switch>
-          </Container>
-        </ApolloProvider>
+        <Container>
+          <Route exact={true} path="/" component={Home} />
+          <Switch>
+            <Route path="/write" component={Write} />
+            <Route path="/:postId" component={Post} />
+          </Switch>
+        </Container>
       </RootContainer>
     );
   }

@@ -2,18 +2,16 @@ import * as functions from 'firebase-functions';
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
 import * as mongoose from 'mongoose';
-import { existsSync, readFileSync } from 'fs';
+
+import { config } from 'dotenv';
 
 import Posts from './routes/posts/';
 
-if (existsSync('.env')) {
-  mongoose.connect(
-    readFileSync('.env', 'utf8'),
-    {
-      useNewUrlParser: true
-    }
-  );
-}
+config();
+
+mongoose.connect(process.env.MONGODB).catch(err => {
+  console.error(err);
+});
 
 const app = express();
 
