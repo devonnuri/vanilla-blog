@@ -39,18 +39,8 @@ export const writePost = async (request: Request, response: Response) => {
 
   const { title, body } = request.body;
 
-  const lastPost = (await Post.findOne(
-    {},
-    {},
-    {
-      sort: {
-        createdAt: -1,
-      },
-    }
-  )) || { id: 0 };
-
   const post = new Post({
-    id: lastPost.id + 1,
+    id: Post.getLastPostId() + 1,
     title,
     body,
     createdAt: new Date(),

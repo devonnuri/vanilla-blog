@@ -1,10 +1,30 @@
-import { Schema, model } from 'mongoose';
+import { Schema, model, Model, Document } from 'mongoose';
+
+interface PostModel extends Model<any> {
+  getLastPostId(): number;
+}
 
 const post = new Schema({
   id: Number,
   title: String,
   body: String,
-  createdAt: Date
+  createdAt: Date,
 });
 
-export default model('Post', post);
+post.statics.getLastPostId = async function() {
+  const lastPost = await this.findOne(
+    {},
+    {},
+    {
+      sort: {
+        createdAt: -1,
+      },
+    }
+  );
+
+  return lastPost ? lastPost.id : 0;
+};
+
+export const Post: PostModel = model<any, PostModel>('Post', post);
+
+export default Post;
