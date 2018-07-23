@@ -23,6 +23,8 @@ export const register = (request: Request, response: Response) => {
         username,
         password: await hash(password),
       });
+
+      response.status(200).end();
     });
 };
 
@@ -47,5 +49,12 @@ export const login = (request: Request, response: Response) => {
       }
 
       response.cookie('access_token', await generate({ username }));
+
+      response.status(200).end();
     });
+};
+
+export const logout = (request: Request, response: Response) => {
+  response.cookie('access_token', null);
+  response.status(204).end();
 };
