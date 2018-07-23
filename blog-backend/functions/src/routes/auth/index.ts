@@ -4,8 +4,8 @@ import * as authCtrl from './auth.ctrl';
 
 const Posts = Router();
 
-Posts.post('/register', authCtrl.listPost);
-Posts.post('/login', authCtrl.writePost);
+Posts.post('/register', authCtrl.register);
+Posts.post('/login', authCtrl.login);
 Posts.post('/logout', authCtrl.readPost);
 
 export default Posts;
