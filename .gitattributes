@@ -1,2 +1,3 @@
-blog-backend/functions/src/*
-blog-frontend/src/*
+blog-frontend/config/* linguist-vendored
+blog-frontend/public/* linguist-vendored
+blog-frontend/scripts/* linguist-vendored
