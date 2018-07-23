@@ -4,23 +4,32 @@ import * as Joi from 'joi';
 
 import { validateSchema } from '../../lib/common';
 
-const postRef = firestore().collection('post');
+const postsRef = firestore().collection('post');
 
 export const listPost = async (_, response: Response) => {
-  return response.json(await postRef.get());
+  postsRef.get().then(snapshot => {
+    const list = [];
+    snapshot.forEach(document => {
+      list.push(document.data());
+    });
+    response.json(snapshot);
+  });
 };
 
 export const readPost = async (request: Request, response: Response) => {
-  // const post = await Post.findOne({
-  //   id: request.params.postId,
-  // });
-  // if (post) {
-  //   response.json(post);
-  // } else {
-  //   response.status(404).json({
-  //     name: 'POST_NOT_FOUND',
-  //   });
-  // }
+  postsRef
+    .where('id', '==', Number(request.params.id))
+    .get()
+    .then(snapshot => {
+      if (snapshot.empty) {
+        response.status(404).json({
+          name: 'POST_NOT_FOUND',
+        });
+        return;
+      }
+
+      response.json(snapshot.docs[0].data());
+    });
 };
 
 export const writePost = async (request: Request, response: Response) => {
@@ -40,5 +49,17 @@ export const writePost = async (request: Request, response: Response) => {
 
   const { title, body } = request.body;
 
-  response.json(postRef.add({ id: 1, title, body, createdAt: new Date() }));
+  const lastPostId = await postsRef
+    .orderBy('id', 'desc')
+    .limit(1)
+    .get()
+    .then(snapshot => {
+      if (snapshot.empty) {
+        return 1;
+      }
+
+      return snapshot.docs[0].data().id;
+    });
+
+  response.json(postsRef.add({ id: lastPostId + 1, title, body, createdAt: new Date() }));
 };
