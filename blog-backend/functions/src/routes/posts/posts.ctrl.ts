@@ -1,5 +1,5 @@
-import { Request, Response } from 'express';
-import { firestore, initializeApp } from 'firebase-admin';
+import { Request, Response } from '../../lib/express';
+import { firestore } from 'firebase-admin';
 import * as Joi from 'joi';
 
 import { validateSchema } from '../../lib/common';
@@ -7,9 +7,7 @@ import { validateSchema } from '../../lib/common';
 const postRef = firestore().collection('post');
 
 export const listPost = async (_, response: Response) => {
-  postRef.get().then(snapshot => {
-    console.log(require('util').inspect(snapshot));
-  });
+  return response.json(await postRef.get());
 };
 
 export const readPost = async (request: Request, response: Response) => {
@@ -40,14 +38,7 @@ export const writePost = async (request: Request, response: Response) => {
     return;
   }
 
-  // const { title, body } = request.body;
+  const { title, body } = request.body;
 
-  // const post = new Post({
-  //   id: Post.getLastPostId() + 1,
-  //   title,
-  //   body,
-  //   createdAt: new Date(),
-  // });
-  // post.save();
-  // response.json(post);
+  response.json(postRef.add({ id: 1, title, body, createdAt: new Date() }));
 };

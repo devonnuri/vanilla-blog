@@ -6,9 +6,8 @@ import { config } from 'dotenv';
 import * as bodyParser from 'body-parser';
 import * as cors from 'cors';
 import * as cookieParser from 'cookie-parser';
-import * as session from 'express-session';
 
-import { validateToken } from './lib/database';
+import authToken from './lib/middleware/authToken';
 
 initializeApp();
 
@@ -24,14 +23,7 @@ app.use(
   })
 );
 app.use(cookieParser());
-app.use(
-  session({
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: true,
-  })
-);
-app.use(validateToken);
+app.use(authToken);
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
