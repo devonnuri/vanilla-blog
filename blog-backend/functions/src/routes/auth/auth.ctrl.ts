@@ -5,8 +5,10 @@ import { generate } from '../../lib/token';
 
 const usersRef = firestore().collection('users');
 
-export const register = (request: Request, response: Response) => {
+export const register = async (request: Request, response: Response) => {
   const { username, password } = request.body;
+  console.log(request.body);
+
   usersRef
     .where('username', '==', username)
     .get()
@@ -24,7 +26,7 @@ export const register = (request: Request, response: Response) => {
         password: await hash(password),
       });
 
-      response.status(200).end();
+      response.sendStatus(200);
     });
 };
 
@@ -50,11 +52,11 @@ export const login = (request: Request, response: Response) => {
 
       response.cookie('access_token', await generate({ username }));
 
-      response.status(200).end();
+      response.sendStatus(200);
     });
 };
 
 export const logout = (request: Request, response: Response) => {
   response.cookie('access_token', null);
-  response.status(204).end();
+  response.sendStatus(204);
 };

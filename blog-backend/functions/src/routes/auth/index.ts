@@ -2,10 +2,10 @@ import { Router } from 'express';
 
 import * as authCtrl from './auth.ctrl';
 
-const Posts = Router();
+const Auth = Router();
 
-Posts.post('/register', authCtrl.register);
-Posts.post('/login', authCtrl.login);
-Posts.post('/logout', authCtrl.logout);
+Auth.post('/auth/register', authCtrl.register);
+Auth.post('/auth/login', authCtrl.login);
+Auth.post('/auth/logout', authCtrl.logout);
 
-export default Posts;
+export default Auth;
