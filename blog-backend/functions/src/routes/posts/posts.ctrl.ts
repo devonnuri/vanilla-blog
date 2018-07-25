@@ -8,11 +8,7 @@ const postsRef = firestore().collection('post');
 
 export const listPost = async (_, response: Response) => {
   postsRef.get().then(snapshot => {
-    const list = [];
-    snapshot.forEach(document => {
-      list.push(document.data());
-    });
-    response.json(snapshot);
+    response.json(snapshot.docs);
   });
 };
 

@@ -5,9 +5,8 @@ import { generate } from '../../lib/token';
 
 const usersRef = firestore().collection('users');
 
-export const register = async (request: Request, response: Response) => {
+export const register = (request: Request, response: Response) => {
   const { username, password } = request.body;
-  console.log(request.body);
 
   usersRef
     .where('username', '==', username)
@@ -32,6 +31,7 @@ export const register = async (request: Request, response: Response) => {
 
 export const login = (request: Request, response: Response) => {
   const { username, password } = request.body;
+
   usersRef
     .where('username', '==', username)
     .get()
