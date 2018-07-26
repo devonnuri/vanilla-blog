@@ -13,9 +13,13 @@
 
 ### Backend
 * [express](expressjs.com)
-* [mongodb](https://www.mongodb.com/) [(mongoose)](http://mongoosejs.com/)
-* [typescript](https://www.typescriptlang.org/)
+* [Firestore](https://firebase.google.com/docs/firestore/)
+* [typescript](https://ww.typescriptlang.org/)
 
+### Firebase
+* Hosting(PaaS)
+* Firestore(DBaaS)
+* Functions(FaaS)
 
 ## Todo-List
 
