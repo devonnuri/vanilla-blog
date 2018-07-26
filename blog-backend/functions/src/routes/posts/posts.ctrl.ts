@@ -4,7 +4,7 @@ import * as Joi from 'joi';
 
 import { validateSchema } from '../../lib/common';
 
-const postsRef = firestore().collection('post');
+const postsRef = firestore().collection('posts');
 
 export const listPost = async (_, response: Response) => {
   postsRef.get().then(snapshot => {
