@@ -1,17 +1,21 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { match as Match } from 'react-router';
+import client from '../lib/Client';
 
-// import ReactMarkdown from 'react-markdown';
-import { match as Match } from 'react-router-dom';
-
-const Post = ({
-  match: {
-    params: { postId },
-  },
-}: {
+interface IProps {
   match: Match<any>;
-}) => {
-  // match.params.postId
-  return <h2>This is the Post {postId}.</h2>;
-};
+}
+
+class Post extends Component<IProps> {
+  public componentDidMount() {
+    client.get(`/posts/${this.props.match.params.postId}`).then(response => {
+      console.log(response);
+    });
+  }
+
+  public render() {
+    return <div />;
+  }
+}
 
 export default Post;

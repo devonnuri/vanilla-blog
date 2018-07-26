@@ -14,7 +14,7 @@ export const listPost = async (_, response: Response) => {
 
 export const readPost = async (request: Request, response: Response) => {
   postsRef
-    .where('id', '==', Number(request.params.id))
+    .where('id', '==', Number(request.params.postId))
     .get()
     .then(snapshot => {
       if (snapshot.empty) {

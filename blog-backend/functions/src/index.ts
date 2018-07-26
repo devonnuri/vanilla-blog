@@ -20,7 +20,7 @@ app.use(
     origin:
       process.env.NODE_ENV === 'development'
         ? 'http://localhost:3000'
-        : 'https://blog-6397d.firebaseapp.com/',
+        : 'https://blog-6397d.firebaseapp.com',
     optionsSuccessStatus: 200,
     credentials: true,
   })
