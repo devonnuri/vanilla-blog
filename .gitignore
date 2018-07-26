@@ -5,5 +5,5 @@ yarn*
 node_modules/
 .env
 build/
-lib/
+blog-backend/functions/lib/
 .yarnclean

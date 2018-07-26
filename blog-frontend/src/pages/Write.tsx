@@ -3,9 +3,6 @@ import ReactMde, { ReactMdeTypes } from 'react-mde';
 import Showdown from 'showdown';
 import styled from 'styled-components';
 
-import gql from 'graphql-tag';
-import { Mutation } from 'react-apollo';
-
 import 'react-mde/lib/styles/css/react-mde-all.css';
 
 const ButtonSet = styled.div`
@@ -54,14 +51,6 @@ const Submit = styled.input`
   }
 `;
 
-const mutation = gql`
-  mutation addPost($title: String!, $body: String!) {
-    addPost(title: $title, body: $body) {
-      id
-    }
-  }
-`;
-
 export default class Write extends React.Component<any, any> {
   public converter: Showdown.Converter;
 
@@ -87,37 +76,19 @@ export default class Write extends React.Component<any, any> {
 
   public render() {
     return (
-      <Mutation mutation={mutation}>
-        {addPost => (
-          <form
-            onSubmit={e => {
-              e.preventDefault();
-              addPost({
-                variables: {
-                  title: this.state.title,
-                  body: this.state.mdeState.markdown,
-                },
-              }).then(({ data }: any) => {
-                this.props.history.push(`/${data.addPost.id}`);
-              });
-            }}
-          >
-            <h1>글쓰기</h1>
-            <TitleInput type="text" placeholder="제목" onChange={this.onTitleChange} />
-            <ReactMde
-              onChange={this.onBodyChange}
-              editorState={this.state.mdeState}
-              generateMarkdownPreview={markdown =>
-                Promise.resolve(this.converter.makeHtml(markdown))
-              }
-              layout="horizontal"
-            />
-            <ButtonSet>
-              <Submit type="submit" value="쓰기" />
-            </ButtonSet>
-          </form>
-        )}
-      </Mutation>
+      <div>
+        <h1>글쓰기</h1>
+        <TitleInput type="text" placeholder="제목" onChange={this.onTitleChange} />
+        <ReactMde
+          onChange={this.onBodyChange}
+          editorState={this.state.mdeState}
+          generateMarkdownPreview={markdown => Promise.resolve(this.converter.makeHtml(markdown))}
+          layout="horizontal"
+        />
+        <ButtonSet>
+          <Submit type="submit" value="쓰기" />
+        </ButtonSet>
+      </div>
     );
   }
 }

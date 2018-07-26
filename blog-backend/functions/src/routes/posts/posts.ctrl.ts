@@ -57,5 +57,12 @@ export const writePost = async (request: Request, response: Response) => {
       return snapshot.docs[0].data().id;
     });
 
-  response.json(postsRef.add({ id: lastPostId + 1, title, body, createdAt: new Date() }));
+  response.json(
+    await postsRef.add({
+      id: lastPostId + 1,
+      title,
+      body,
+      createdAt: new Date(),
+    })
+  );
 };
