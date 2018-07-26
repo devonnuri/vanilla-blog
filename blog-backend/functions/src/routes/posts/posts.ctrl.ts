@@ -8,7 +8,7 @@ const postsRef = firestore().collection('posts');
 
 export const listPost = async (_, response: Response) => {
   postsRef.get().then(snapshot => {
-    response.json(snapshot.docs);
+    response.json(snapshot.docs.map(doc => doc.data()));
   });
 };
 
@@ -51,7 +51,7 @@ export const writePost = async (request: Request, response: Response) => {
     .get()
     .then(snapshot => {
       if (snapshot.empty) {
-        return 1;
+        return 0;
       }
 
       return snapshot.docs[0].data().id;
