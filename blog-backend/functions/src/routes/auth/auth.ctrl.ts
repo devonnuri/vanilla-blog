@@ -36,7 +36,7 @@ export const login = (request: Request, response: Response) => {
     .where('username', '==', username)
     .get()
     .then(async snapshot => {
-      if (!snapshot.empty) {
+      if (snapshot.empty) {
         response.status(400).json({
           name: 'INVALID_CREDENTIALS',
         });
