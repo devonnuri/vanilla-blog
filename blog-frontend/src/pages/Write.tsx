@@ -5,51 +5,15 @@ import styled from 'styled-components';
 
 import 'react-mde/lib/styles/css/react-mde-all.css';
 import client from '../lib/Client';
+import TextInput from '../components/TextInput';
+import Button from '../components/Button';
+import { isHttpStatus } from 'src/lib/common';
+import { AxiosError } from 'axios';
 
 const ButtonSet = styled.div`
   text-align: center;
 
   padding: 2rem 0;
-`;
-
-const TitleInput = styled.input`
-  width: 100%;
-
-  margin: 0 0 2rem 0;
-  border: none;
-  border-bottom: 2px solid #7f8c8d;
-  outline: none;
-
-  font-size: 1.5em;
-  font-family: 'Noto Sans KR';
-
-  transition: all 0.3s ease-in-out;
-
-  &:focus {
-    border-bottom: 4px solid #3498db;
-  }
-`;
-
-const Submit = styled.input`
-  padding: 10px 30px;
-  border: none;
-  border-bottom: 5px solid #2980b9;
-  border-radius: 5px;
-
-  color: white;
-  background-color: #3498db;
-  box-shadow: 1px 1px 10px #555;
-
-  font-size: 1.25em;
-  font-family: 'Noto Sans KR';
-
-  transition: all 0.1s ease-in-out;
-
-  &:active {
-    box-shadow: 1px 1px 5px #555;
-    border-bottom: 0px solid #2980b9;
-    transform: translateY(5px);
-  }
 `;
 
 class Write extends React.Component<any, any> {
@@ -86,8 +50,16 @@ class Write extends React.Component<any, any> {
           body: this.state.mdeState.markdown,
         })
         .then(response => {
-          if (response.status === 401) {
-            alert('asdf');
+          alert('포스트가 성공적으로 등록되었습니다!');
+          this.props.history.push('/');
+        })
+        .catch((error: AxiosError) => {
+          if (!error.response) {
+            return;
+          }
+
+          if (isHttpStatus(error.response.status, '4')) {
+            this.props.history.push('/login');
           }
         });
     }
@@ -97,7 +69,7 @@ class Write extends React.Component<any, any> {
     return (
       <form onSubmit={this.onSubmit}>
         <h1>글쓰기</h1>
-        <TitleInput type="text" placeholder="제목" onChange={this.onTitleChange} />
+        <TextInput type="text" placeholder="제목" onChange={this.onTitleChange} />
         <ReactMde
           onChange={this.onBodyChange}
           editorState={this.state.mdeState}
@@ -105,7 +77,9 @@ class Write extends React.Component<any, any> {
           layout="horizontal"
         />
         <ButtonSet>
-          <Submit type="submit" value="쓰기" />
+          <Button type="submit" theme="push" large>
+            글쓰기
+          </Button>
         </ButtonSet>
       </form>
     );

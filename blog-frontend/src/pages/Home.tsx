@@ -11,27 +11,25 @@ interface IPost {
   createdAt: Date;
 }
 
-class Home extends Component {
+interface IProps {
+  history?: any;
+}
+
+class Home extends Component<IProps> {
   public state = {
     posts: [],
   };
 
   public componentDidMount() {
-    client
-      .get('/posts/list')
-      .then(response => {
-        this.setState({ posts: response.data });
-      })
-      .catch(err => {
-        /* tslint:disable */
-        console.error(err);
-      });
+    client.get('/posts/list').then(response => {
+      this.setState({ posts: response.data });
+    });
   }
 
   public render() {
     return (
       <form>
-        {this.state.posts.length < 1 && <h2>아직 아무 포스트도 없습니다!</h2>}
+        {this.state.posts.length < 1 && <h2>아직 포스트가 없습니다!</h2>}
 
         {this.state.posts
           .slice()

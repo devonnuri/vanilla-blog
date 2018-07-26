@@ -15,11 +15,16 @@ import Router from './routes';
 
 const app = express();
 
-// app.use(
-//   cors({
-//     origin: true,
-//   })
-// );
+const corsOptions = {
+  origin:
+    process.env.NODE_ENV === 'development'
+      ? 'http://localhost:3000'
+      : 'https://blog-6397d.firebaseapp.com/',
+  optionsSuccessStatus: 200,
+};
+
+app.use(cors(corsOptions));
+
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());

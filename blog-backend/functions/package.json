@@ -3,7 +3,7 @@
   "scripts": {
     "lint": "tslint --project tsconfig.json",
     "build": "tsc",
-    "serve": "nodemon --watch src/ --exec \"npm run build && firebase serve --only functions\"",
+    "serve": "cross-env NODE_ENV=development nodemon --watch src/ --exec \"npm run build && firebase serve --only functions\"",
     "shell": "npm run build && firebase functions:shell",
     "start": "npm run shell",
     "deploy": "firebase deploy --only functions",
@@ -30,6 +30,7 @@
     "@types/joi": "^13.4.0",
     "@types/mongodb": "^3.1.1",
     "@types/mongoose": "^5.2.0",
+    "cross-env": "^5.2.0",
     "tslint": "^5.8.0",
     "typescript": "^2.5.3"
   },

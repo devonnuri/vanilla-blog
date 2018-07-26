@@ -21,6 +21,7 @@
       }
     ],
     "ordered-imports": false,
-    "jsx-no-lambda": false
+    "jsx-no-lambda": false,
+    "jsx-boolean-value": false
   }
 }
