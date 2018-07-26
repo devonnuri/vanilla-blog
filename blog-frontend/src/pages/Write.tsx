@@ -4,6 +4,7 @@ import Showdown from 'showdown';
 import styled from 'styled-components';
 
 import 'react-mde/lib/styles/css/react-mde-all.css';
+import client from '../lib/Client';
 
 const ButtonSet = styled.div`
   text-align: center;
@@ -51,7 +52,7 @@ const Submit = styled.input`
   }
 `;
 
-export default class Write extends React.Component<any, any> {
+class Write extends React.Component<any, any> {
   public converter: Showdown.Converter;
 
   constructor(props: any) {
@@ -61,6 +62,7 @@ export default class Write extends React.Component<any, any> {
       mdeState: null,
       title: null,
     };
+
     this.converter = new Showdown.Converter({ tables: true, simplifiedAutoLink: true });
 
     this.onTitleChange = this.onTitleChange.bind(this);
@@ -74,9 +76,26 @@ export default class Write extends React.Component<any, any> {
     this.setState({ title: event.target.value });
   };
 
+  public onSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (this.state.mdeState) {
+      client
+        .post('/posts/write', {
+          title: this.state.title,
+          body: this.state.mdeState.markdown,
+        })
+        .then(response => {
+          if (response.status === 401) {
+            alert('asdf');
+          }
+        });
+    }
+  };
+
   public render() {
     return (
-      <div>
+      <form onSubmit={this.onSubmit}>
         <h1>글쓰기</h1>
         <TitleInput type="text" placeholder="제목" onChange={this.onTitleChange} />
         <ReactMde
@@ -88,7 +107,9 @@ export default class Write extends React.Component<any, any> {
         <ButtonSet>
           <Submit type="submit" value="쓰기" />
         </ButtonSet>
-      </div>
+      </form>
     );
   }
 }
+
+export default Write;

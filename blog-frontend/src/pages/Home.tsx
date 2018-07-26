@@ -17,15 +17,21 @@ class Home extends Component {
   };
 
   public componentDidMount() {
-    client.get('/posts/list').then(response => {
-      this.setState({ posts: response.data });
-    });
+    client
+      .get('/posts/list')
+      .then(response => {
+        this.setState({ posts: response.data });
+      })
+      .catch(err => {
+        /* tslint:disable */
+        console.error(err);
+      });
   }
 
   public render() {
     return (
-      <div>
-        {this.state.posts.length < 1 && <h3>아직 아무 포스트도 없습니다!</h3>}
+      <form>
+        {this.state.posts.length < 1 && <h2>아직 아무 포스트도 없습니다!</h2>}
 
         {this.state.posts
           .slice()
@@ -39,7 +45,7 @@ class Home extends Component {
               createdAt={post.createdAt}
             />
           ))}
-      </div>
+      </form>
     );
   }
 }
