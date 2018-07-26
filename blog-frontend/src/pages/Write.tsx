@@ -50,7 +50,6 @@ class Write extends React.Component<any, any> {
           body: this.state.mdeState.markdown,
         })
         .then(response => {
-          alert('포스트가 성공적으로 등록되었습니다!');
           this.props.history.push('/');
         })
         .catch((error: AxiosError) => {
