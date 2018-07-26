@@ -41,7 +41,7 @@ class App extends React.Component {
       <RootContainer>
         <Helmet>
           <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lobster" />
-          <link rel="stylesheet" href="http://fonts.googleapis.com/earlyaccess/notosanskr.css" />
+          <link rel="stylesheet" href="https://fonts.googleapis.com/earlyaccess/notosanskr.css" />
 
           <title>devon.log</title>
           <script defer={true} src="https://use.fontawesome.com/releases/v5.0.6/js/all.js" />
