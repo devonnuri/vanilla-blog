@@ -1,10 +1,10 @@
-import React, { SFC, Fragment } from 'react';
+import React, { SFC, ReactNode } from 'react';
 
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 
-const Container = styled(Fragment)`
+const Container = styled.div`
   .button {
     font-size: 1em;
     font-family: 'Noto Sans KR';
@@ -15,12 +15,12 @@ const Container = styled(Fragment)`
     color: white;
     background-color: #3498db;
 
-    .large {
+    &.large {
       font-size: 1.25em;
       padding: 10px 30px;
     }
 
-    .push {
+    &.push {
       border-bottom: 5px solid #2980b9;
       border-radius: 5px;
       transition: all 0.1s ease-in-out;
@@ -32,6 +32,10 @@ const Container = styled(Fragment)`
         transform: translateY(5px);
       }
     }
+
+    &.fullWidth {
+      width: 100%;
+    }
   }
 `;
 
@@ -39,13 +43,14 @@ interface IProps {
   theme?: 'default' | 'outline' | 'paper' | 'gray' | 'transparent' | 'push';
   className?: string;
   to?: null | string;
-  children: Node;
+  children: ReactNode;
   large?: boolean;
   fullWidth?: boolean;
+  type?: any;
 }
 
 const Button: SFC<IProps> = ({ theme, children, className, to, large, fullWidth, ...rest }) => {
-  const buttonClass = classNames('Button', theme, className, {
+  const buttonClass = classNames('button', theme, className, {
     large,
     fullWidth,
   });
