@@ -6,7 +6,14 @@ import { generate } from '../../lib/token';
 const usersRef = firestore().collection('users');
 
 export const register = (request: Request, response: Response) => {
-  const { username, password } = request.body;
+  const { username, password, registration_code: registrationCode } = request.body;
+
+  if (registrationCode !== process.env.REGISTRATION_CODE) {
+    response.status(400).json({
+      name: 'INVALID_REGISTRATION_CODE',
+    });
+    return;
+  }
 
   usersRef
     .where('username', '==', username)
