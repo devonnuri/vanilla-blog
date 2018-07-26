@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import client from '../lib/Client';
 
 import Item from '../components/Item';
 import removeMd from 'remove-markdown';
@@ -17,7 +17,7 @@ class Home extends Component {
   };
 
   public componentDidMount() {
-    axios.get('/posts/list').then(response => {
+    client.get('/posts/list').then(response => {
       this.setState({ posts: response.data });
     });
   }
@@ -25,6 +25,8 @@ class Home extends Component {
   public render() {
     return (
       <div>
+        {this.state.posts.length < 1 && <h3>아직 아무 포스트도 없습니다!</h3>}
+
         {this.state.posts
           .slice()
           .sort((a: IPost, b: IPost) => b.id - a.id)

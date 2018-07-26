@@ -1,4 +1,3 @@
-import { auth } from 'firebase-admin';
 import { Request, Response } from '../express';
 import { decode } from '../token';
 

@@ -1,40 +1,80 @@
-import React, { SFC } from 'react';
+import React, { SFC, Fragment } from 'react';
 
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
+import classNames from 'classnames';
 
-const StyledButton = styled.button`
-  padding: 10px 30px;
-  border: none;
-  border-bottom: 5px solid #2980b9;
-  border-radius: 5px;
+const Container = styled(Fragment)`
+  .button {
+    font-size: 1em;
+    font-family: 'Noto Sans KR';
 
-  color: white;
-  background-color: #3498db;
-  box-shadow: 1px 1px 10px #555;
+    padding: 5px 15px;
+    border: none;
 
-  font-size: 1.25em;
-  font-family: 'Noto Sans KR';
+    color: white;
+    background-color: #3498db;
 
-  transition: all 0.1s ease-in-out;
+    .large {
+      font-size: 1.25em;
+      padding: 10px 30px;
+    }
 
-  &:active {
-    box-shadow: 1px 1px 5px #555;
-    border-bottom: 0px solid #2980b9;
-    transform: translateY(5px);
+    .push {
+      border-bottom: 5px solid #2980b9;
+      border-radius: 5px;
+      transition: all 0.1s ease-in-out;
+      box-shadow: 1px 1px 10px #555;
+
+      &:active {
+        box-shadow: 1px 1px 5px #555;
+        border-bottom: 0px solid #2980b9;
+        transform: translateY(5px);
+      }
+    }
   }
 `;
 
-const StyledInput = StyledButton.withComponent('input');
-const StyledLink = StyledButton.withComponent('a');
-
 interface IProps {
-  isInput?: boolean;
-  color: string;
+  theme?: 'default' | 'outline' | 'paper' | 'gray' | 'transparent' | 'push';
+  className?: string;
+  to?: null | string;
+  children: Node;
+  large?: boolean;
+  fullWidth?: boolean;
 }
 
-const Button: SFC<IProps> = ({ children, type, ...rest }) => {
-  const Component = type === 'button' ? 'StyledButton' : (type === 'input' ? 'StyledInput': 'StyledLink');
-  return (<Component {...rest}>{children}</StyledButton>);
+const Button: SFC<IProps> = ({ theme, children, className, to, large, fullWidth, ...rest }) => {
+  const buttonClass = classNames('Button', theme, className, {
+    large,
+    fullWidth,
+  });
+
+  if (to) {
+    return (
+      <Container>
+        <Link className={buttonClass} to={to} {...rest}>
+          {children}
+        </Link>
+      </Container>
+    );
+  }
+
+  return (
+    <Container>
+      <button className={buttonClass} {...rest}>
+        {children}
+      </button>
+    </Container>
+  );
+};
+
+Button.defaultProps = {
+  theme: 'default',
+  className: '',
+  to: null,
+  large: false,
+  fullWidth: false,
 };
 
 export default Button;
