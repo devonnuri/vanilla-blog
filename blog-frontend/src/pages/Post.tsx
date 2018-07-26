@@ -1,5 +1,4 @@
 import React from 'react';
-// import gql from 'graphql-tag';
 
 // import ReactMarkdown from 'react-markdown';
 import { match as Match } from 'react-router-dom';

@@ -29,7 +29,7 @@ class Home extends Component<IProps> {
   public render() {
     return (
       <form>
-        {this.state.posts.length < 1 && <h2>아직 포스트가 없습니다!</h2>}
+        {this.state.posts.length < 1 && <h2>로딩중입니다..</h2>}
 
         {this.state.posts
           .slice()
