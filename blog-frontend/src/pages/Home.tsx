@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { Component } from 'react';
+import axios from 'axios';
 
 import Item from '../components/Item';
-
 import removeMd from 'remove-markdown';
 
 interface IPost {
@@ -11,48 +11,35 @@ interface IPost {
   createdAt: Date;
 }
 
-const query = gql`
-  {
-    post {
-      id
-      title
-      body
-      createdAt
-    }
+class Home extends Component {
+  public state = {
+    posts: [],
+  };
+
+  public componentDidMount() {
+    axios.get('/posts/list').then(response => {
+      this.setState({ posts: response.data });
+    });
   }
-`;
 
-const Home = () => {
-  return (
-    // <Query query={query}>
-    //   {({ loading, data, error }) => {
-    //     if (loading) {
-    //       return <h3>Loading</h3>;
-      //     }
-    //     if (error) {
-    //       return <h3>Error Occurred</h3>;
-    //     }
-
-    //     if (data.post.length < 1) {
-    //       return <h1>아직 포스트가 없네요 ㅠㅠ</h1>;
-    //     }
-
-    //     return data.post
-    //       .slice()
-    //       .sort((a: IPost, b: IPost) => b.id - a.id)
-    //       .map((post: IPost) => (
-    //         <Item
-    //           key={post.id}
-    //           id={post.id}
-    //           title={post.title}
-    //           body={removeMd(post.body)}
-    //           createdAt={post.createdAt}
-    //         />
-    //       ));
-    //   }}
-    // </Query>
-    <div>Hmm.. It seems not working</div>
-  );
-};
+  public render() {
+    return (
+      <div>
+        {this.state.posts
+          .slice()
+          .sort((a: IPost, b: IPost) => b.id - a.id)
+          .map((post: IPost) => (
+            <Item
+              key={post.id}
+              id={post.id}
+              title={post.title}
+              body={removeMd(post.body)}
+              createdAt={post.createdAt}
+            />
+          ))}
+      </div>
+    );
+  }
+}
 
 export default Home;
