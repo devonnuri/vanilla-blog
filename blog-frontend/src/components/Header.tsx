@@ -75,12 +75,12 @@ class Header extends Component<any, IState> {
   };
 
   public async componentDidMount() {
-    await this.checkState();
+    this.checkState();
   }
 
   public componentWillReceiveProps(nextProps: any) {
     if (nextProps.location.pathname !== this.props.location.pathname) {
-      this.forceUpdate();
+      this.checkState();
     }
   }
 

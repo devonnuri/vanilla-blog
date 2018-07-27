@@ -1,11 +1,10 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import styled from 'styled-components';
-
-import Header from './components/Header';
-import { Home, Post, Write, Login, Logout } from './pages';
-
 import { Helmet } from 'react-helmet';
+
+import { Home, Post, Write, Login, Logout } from './pages';
+import Header from 'src/components/Header';
 import Container from 'src/components/Container';
 
 const RootContainer = styled.div`
