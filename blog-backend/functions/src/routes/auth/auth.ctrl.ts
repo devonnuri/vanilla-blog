@@ -63,7 +63,13 @@ export const login = (request: Request, response: Response) => {
     });
 };
 
-export const logout = (request: Request, response: Response) => {
+export const logout = (_: Request, response: Response) => {
   response.cookie('access_token', null);
   response.sendStatus(204);
+};
+
+export const checkLogin = (request: Request, response: Response) => {
+  response.status(200).json({
+    username: request.user,
+  });
 };

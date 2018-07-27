@@ -11,6 +11,20 @@ const PostContainer = styled.div`
   pre code {
     font-family: 'Roboto Mono';
   }
+
+  .post-info {
+    h1 {
+      text-align: center;
+      font-size: 3em;
+    }
+
+    .createdAt {
+      text-align: right;
+      color: #aaa;
+    }
+
+    margin-bottom: 2rem;
+  }
 `;
 
 interface IProps {
@@ -82,8 +96,10 @@ class Post extends Component<IProps, IState> {
 
     return (
       <PostContainer>
-        <h1>{title}</h1>
-        <p>{new Date(createdAt).toLocaleString()}</p>
+        <div className="post-info">
+          <h1>{title}</h1>
+          <p className="createdAt">{new Date(createdAt).toLocaleString()}</p>
+        </div>
         <ReactMarkdown source={body} />
       </PostContainer>
     );

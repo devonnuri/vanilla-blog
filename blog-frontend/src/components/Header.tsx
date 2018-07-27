@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { Component, Fragment } from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 import Container from './Container';
+import { checkLogin } from '../lib/common';
 
-const Header = styled.div`
+const StyledHeader = styled.div`
   text-align: center;
   margin: 0;
   padding: 0;
@@ -39,6 +41,7 @@ const Navbar = styled.ul`
   text-align: left;
   list-style-type: none;
   color: white;
+
   li {
     display: inline-block;
     padding: 0.6rem 1rem;
@@ -47,24 +50,69 @@ const Navbar = styled.ul`
     border-top-right-radius: 5px;
     cursor: pointer;
 
+    a {
+      color: white;
+      text-decoration: none;
+    }
+
     &:hover {
       background-color: rgba(0, 0, 0, 0.3);
+    }
+
+    &.right {
+      float: right;
     }
   }
 `;
 
-export default () => {
-  return (
-    <Header>
-      <Title href="/">DevonLog</Title>
-      <Container>
-        <Navbar>
-          <li>일상</li>
-          <li>보안</li>
-          <li>개발</li>
-          <li>몰라</li>
-        </Navbar>
-      </Container>
-    </Header>
-  );
-};
+interface IState {
+  login: boolean;
+}
+
+class Header extends Component<any, IState> {
+  public state = {
+    login: false,
+  };
+
+  public async componentDidMount() {
+    await this.checkState();
+  }
+
+  public async checkState() {
+    this.setState({
+      login: await checkLogin(),
+    });
+  }
+
+  public render() {
+    return (
+      <StyledHeader>
+        <Title href="/">DevonLog</Title>
+        <Container>
+          <Navbar>
+            <li>카테고리</li>
+            <li>여러개</li>
+            {this.state.login ? (
+              <Fragment>
+                <li className="right">
+                  <Link to="/logout">로그아웃</Link>
+                </li>
+                <li className="right">
+                  <Link to="/write">글쓰기</Link>
+                </li>
+              </Fragment>
+            ) : (
+              <Fragment>
+                <li className="right">
+                  <Link to="/login">로그인</Link>
+                </li>
+              </Fragment>
+            )}
+          </Navbar>
+        </Container>
+      </StyledHeader>
+    );
+  }
+}
+
+export default Header;
