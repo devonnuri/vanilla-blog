@@ -3,7 +3,6 @@ import { decode } from '../token';
 
 export default async (request: Request, response: Response, next: Function) => {
   const token = request.cookies['access_token'];
-  console.log(token);
 
   if (!token) {
     request.user = null;
@@ -13,7 +12,6 @@ export default async (request: Request, response: Response, next: Function) => {
 
   try {
     const decoded: any = await decode(token);
-    console.log(decoded);
     const { user, exp } = decoded;
 
     request.user = user;

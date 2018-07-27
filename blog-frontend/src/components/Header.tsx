@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
 import Container from './Container';
 import { checkLogin } from '../lib/common';
@@ -78,6 +78,12 @@ class Header extends Component<any, IState> {
     await this.checkState();
   }
 
+  public componentWillReceiveProps(nextProps: any) {
+    if (nextProps.location.pathname !== this.props.location.pathname) {
+      this.forceUpdate();
+    }
+  }
+
   public async checkState() {
     this.setState({
       login: await checkLogin(),
@@ -115,4 +121,4 @@ class Header extends Component<any, IState> {
   }
 }
 
-export default Header;
+export default withRouter(Header);
