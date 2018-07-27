@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { match as Match } from 'react-router';
 import client from '../lib/Client';
+import ReactMarkdown from 'react-markdown';
 
 interface IProps {
   match: Match<any>;
@@ -59,7 +60,9 @@ class Post extends Component<IProps, IState> {
       <div>
         <h1>{title}</h1>
         <p>{createdAt}</p>
-        <p>{body}</p>
+        <div>
+          <ReactMarkdown source={body} />
+        </div>
       </div>
     );
   }
