@@ -48,9 +48,11 @@ class Post extends Component<IProps, IState> {
   }
 
   public render() {
-    if (this.state.exists && !this.state.loaded) {
+    if (!this.state.loaded) {
       return <h2>로딩중입니다.</h2>;
-    } else if (!this.state.exists && this.state.loaded) {
+    }
+
+    if (!this.state.exists) {
       return <h2>존재하지 않는 포스트입니다.</h2>;
     }
 
