@@ -53,7 +53,7 @@ class App extends React.Component {
           <Switch>
             <Route path="/login" component={Login} />
             <Route path="/write" component={Write} />
-            <Route path="/:postId" component={Post} />
+            <Route path="/:postId(\d+)" component={Post} />
           </Switch>
         </Container>
       </RootContainer>
