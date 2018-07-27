@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
+
 import { match as Match } from 'react-router';
-import client from '../lib/Client';
 import ReactMarkdown from 'react-markdown';
+import { highlightBlock } from 'highlight.js';
+import client from '../lib/Client';
 
 interface IProps {
   match: Match<any>;
@@ -47,6 +50,18 @@ class Post extends Component<IProps, IState> {
       });
   }
 
+  public componentDidUpdate() {
+    if (ReactDOM.findDOMNode(this)) {
+      const node = ReactDOM.findDOMNode(this);
+
+      if (node instanceof HTMLElement) {
+        Array.from(node.querySelectorAll('pre code')).forEach(element => {
+          highlightBlock(element);
+        });
+      }
+    }
+  }
+
   public render() {
     if (!this.state.loaded) {
       return <h2>로딩중입니다.</h2>;
@@ -61,10 +76,8 @@ class Post extends Component<IProps, IState> {
     return (
       <div>
         <h1>{title}</h1>
-        <p>{createdAt.toLocaleString()}</p>
-        <div>
-          <ReactMarkdown source={body} />
-        </div>
+        <p>{new Date(createdAt).toLocaleString()}</p>
+        <ReactMarkdown source={body} />
       </div>
     );
   }

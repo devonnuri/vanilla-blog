@@ -21,12 +21,12 @@ class App extends React.Component {
           <link rel="stylesheet" href="https://fonts.googleapis.com/earlyaccess/notosanskr.css" />
 
           <title>devon.log</title>
-          <script defer={true} src="https://use.fontawesome.com/releases/v5.0.6/js/all.js" />
+          <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js" />
         </Helmet>
 
         <Header />
         <Container>
-          <Route exact={true} path="/" component={Home} />
+          <Route exact path="/" component={Home} />
           <Switch>
             <Route path="/login" component={Login} />
             <Route path="/write" component={Write} />

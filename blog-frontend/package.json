@@ -20,6 +20,7 @@
     "file-loader": "0.11.2",
     "fork-ts-checker-webpack-plugin": "^0.2.8",
     "fs-extra": "3.0.1",
+    "highlight.js": "^9.12.0",
     "html-webpack-plugin": "2.29.0",
     "jest": "22.4.2",
     "object-assign": "4.1.1",
@@ -31,6 +32,7 @@
     "react-dev-utils": "^5.0.1",
     "react-dom": "^16.4.1",
     "react-helmet": "^5.2.0",
+    "react-icons": "^2.2.7",
     "react-markdown": "^3.3.4",
     "react-mde": "^5.7.0",
     "react-router-dom": "^4.3.1",
@@ -62,6 +64,7 @@
   },
   "devDependencies": {
     "@types/classnames": "^2.2.6",
+    "@types/highlight.js": "^9.12.3",
     "@types/jest": "^23.1.5",
     "@types/node": "^10.5.2",
     "@types/prop-types": "^15.5.3",

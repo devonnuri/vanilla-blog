@@ -4,6 +4,8 @@ import client from '../lib/Client';
 import Item from '../components/Item';
 import removeMd from 'remove-markdown';
 
+import 'highlight.js/styles/atom-one-dark.css';
+
 interface IPost {
   id: number;
   title: string;
