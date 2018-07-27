@@ -25,6 +25,36 @@ const PostContainer = styled.div`
 
     margin-bottom: 2rem;
   }
+
+  .post-article {
+    font-size: 1.25em;
+
+    h1,
+    h2,
+    h3 {
+      border-bottom: 2px solid #ddd;
+    }
+
+    h1 {
+      padding-bottom: 0.7rem;
+    }
+    h2 {
+      padding-bottom: 0.5rem;
+    }
+    h3 {
+      padding-bottom: 0.3rem;
+    }
+
+    blockquote {
+      margin: 0;
+      padding: 0.5rem 1rem;
+      border-left: 3px solid #ddd;
+      font-size: 1.3em;
+      p {
+        margin: 0;
+      }
+    }
+  }
 `;
 
 interface IProps {
@@ -100,7 +130,7 @@ class Post extends Component<IProps, IState> {
           <h1>{title}</h1>
           <p className="createdAt">{new Date(createdAt).toLocaleString()}</p>
         </div>
-        <ReactMarkdown source={body} />
+        <ReactMarkdown source={body} className="post-article" />
       </PostContainer>
     );
   }
