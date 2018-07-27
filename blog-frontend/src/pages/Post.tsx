@@ -1,10 +1,17 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import styled from 'styled-components';
 
 import { match as Match } from 'react-router';
 import ReactMarkdown from 'react-markdown';
 import { highlightBlock } from 'highlight.js';
 import client from '../lib/Client';
+
+const PostContainer = styled.div`
+  pre code {
+    font-family: 'Roboto Mono';
+  }
+`;
 
 interface IProps {
   match: Match<any>;
@@ -74,11 +81,11 @@ class Post extends Component<IProps, IState> {
     const { title, body, createdAt } = this.state.post;
 
     return (
-      <div>
+      <PostContainer>
         <h1>{title}</h1>
         <p>{new Date(createdAt).toLocaleString()}</p>
         <ReactMarkdown source={body} />
-      </div>
+      </PostContainer>
     );
   }
 }

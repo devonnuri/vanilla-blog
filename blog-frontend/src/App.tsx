@@ -18,6 +18,7 @@ class App extends React.Component {
       <RootContainer>
         <Helmet>
           <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lobster" />
+          <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono" />
           <link rel="stylesheet" href="https://fonts.googleapis.com/earlyaccess/notosanskr.css" />
 
           <title>devon.log</title>
