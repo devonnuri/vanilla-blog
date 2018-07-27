@@ -50,7 +50,7 @@ class Write extends React.Component<any, any> {
           body: this.state.mdeState.markdown,
         })
         .then(response => {
-          this.props.history.push('/');
+          this.props.history.push(`/${response.data.id}`);
         })
         .catch((error: AxiosError) => {
           if (!error.response) {
