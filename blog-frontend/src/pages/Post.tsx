@@ -61,7 +61,7 @@ class Post extends Component<IProps, IState> {
     return (
       <div>
         <h1>{title}</h1>
-        <p>{createdAt}</p>
+        <p>{createdAt.toLocaleString()}</p>
         <div>
           <ReactMarkdown source={body} />
         </div>
