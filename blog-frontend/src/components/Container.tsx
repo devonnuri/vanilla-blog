@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react';
 import styled from 'styled-components';
 
-const StyledContainer = styled.div`
+export const StyledContainer = styled.div`
   width: 100%;
   padding-right: 15px;
   padding-left: 15px;

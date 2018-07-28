@@ -5,10 +5,18 @@ import { Helmet } from 'react-helmet';
 
 import { Home, Post, Write, Login, Logout } from './pages';
 import Header from 'src/components/Header';
-import Container from 'src/components/Container';
+import { StyledContainer } from 'src/components/Container';
+import Footer from 'src/components/Footer';
 
 const RootContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
   font-family: 'Noto Sans KR', sans-serif;
+`;
+
+const BodyContainer = StyledContainer.extend`
+  flex: 1 1 auto;
 `;
 
 class App extends React.Component {
@@ -25,7 +33,7 @@ class App extends React.Component {
         </Helmet>
 
         <Header />
-        <Container>
+        <BodyContainer>
           <Route exact path="/" component={Home} />
           <Switch>
             <Route path="/login" component={Login} />
@@ -33,7 +41,8 @@ class App extends React.Component {
             <Route path="/write" component={Write} />
             <Route path="/:postId(\d+)" component={Post} />
           </Switch>
-        </Container>
+        </BodyContainer>
+        <Footer />
       </RootContainer>
     );
   }

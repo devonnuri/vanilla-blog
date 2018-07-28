@@ -9,6 +9,7 @@ const StyledHeader = styled.div`
   text-align: center;
   margin: 0;
   padding: 0;
+  height: 20vh;
 
   background-image: linear-gradient(135deg, #f761a1 10%, #8c1bab 100%);
 `;
@@ -41,6 +42,7 @@ const Navbar = styled.ul`
   text-align: left;
   list-style-type: none;
   color: white;
+  flex: 0 1 auto;
 
   li {
     display: inline-block;
