@@ -6,6 +6,8 @@ import { match as Match } from 'react-router';
 import ReactMarkdown from 'react-markdown';
 import { highlightBlock } from 'highlight.js';
 import client from '../lib/Client';
+import DisqusComments from 'src/components/DisqusComments';
+import { Location } from 'history';
 
 const PostContainer = styled.div`
   pre code {
@@ -55,10 +57,15 @@ const PostContainer = styled.div`
       }
     }
   }
+
+  #disqus_thread {
+    margin-top: 3rem;
+  }
 `;
 
 interface IProps {
   match: Match<any>;
+  location: Location;
 }
 
 interface IState {
@@ -131,7 +138,11 @@ class Post extends Component<IProps, IState> {
           <p className="createdAt">{new Date(createdAt).toLocaleString()}</p>
         </div>
         <ReactMarkdown source={body} className="post-article" />
-        <div id="disqus_thread" />
+        <DisqusComments
+          id={this.props.match.params.id}
+          title={title}
+          path={this.props.location.pathname}
+        />
       </PostContainer>
     );
   }

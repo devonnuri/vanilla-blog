@@ -20,18 +20,25 @@ interface IProps {
 class Home extends Component<IProps> {
   public state = {
     posts: [],
+    loaded: false,
   };
 
   public componentDidMount() {
-    client.get('/posts/1/1').then(response => {
-      this.setState({ posts: response.data });
-    });
+    client
+      .get('/posts/1/1')
+      .then(response => {
+        this.setState({ posts: response.data, loaded: true });
+      })
+      .catch(error => {
+        this.setState({ ...this.state, loaded: true });
+      });
   }
 
   public render() {
     return (
-      <form>
-        {this.state.posts.length < 1 && <h2>로딩중입니다..</h2>}
+      <div>
+        {this.state.posts.length < 1 &&
+          (this.state.loaded ? <h2>포스트가 하나도 없네요 ;)</h2> : <h2>로딩중입니다...</h2>)}
 
         {this.state.posts
           .slice()
@@ -45,7 +52,7 @@ class Home extends Component<IProps> {
               createdAt={post.createdAt}
             />
           ))}
-      </form>
+      </div>
     );
   }
 }
