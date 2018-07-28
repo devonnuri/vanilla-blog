@@ -1,14 +1,23 @@
-import { Component } from 'react';
+import React, { Component } from 'react';
 import client from '../lib/Client';
+import LoginContext from '../contexts/LoginContext';
 
 class Logout extends Component<any, any> {
-  public componentDidMount() {
-    client.post('/auth/logout');
+  public state = {
+    login: true,
+  };
+
+  public async componentDidMount() {
+    await client.post('/auth/logout').then(() => {
+      this.setState({
+        login: false,
+      });
+    });
     this.props.history.push('/');
   }
 
   public render() {
-    return '';
+    return <LoginContext.Provider value={this.state} />;
   }
 }
 

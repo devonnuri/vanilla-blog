@@ -1,9 +1,9 @@
 import React, { Component, Fragment } from 'react';
 import styled from 'styled-components';
-import { Link, withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import Container from './Container';
-import { checkLogin } from '../lib/common';
+import LoginContext from '../contexts/LoginContext';
 
 const StyledHeader = styled.div`
   text-align: center;
@@ -74,22 +74,6 @@ class Header extends Component<any, IState> {
     login: false,
   };
 
-  public async componentDidMount() {
-    this.checkState();
-  }
-
-  public componentWillReceiveProps(nextProps: any) {
-    if (nextProps.location.pathname !== this.props.location.pathname) {
-      this.checkState();
-    }
-  }
-
-  public async checkState() {
-    this.setState({
-      login: await checkLogin(),
-    });
-  }
-
   public render() {
     return (
       <StyledHeader>
@@ -98,22 +82,30 @@ class Header extends Component<any, IState> {
           <Navbar>
             <li>카테고리</li>
             <li>여러개</li>
-            {this.state.login ? (
-              <Fragment>
-                <li className="right">
-                  <Link to="/logout">로그아웃</Link>
-                </li>
-                <li className="right">
-                  <Link to="/write">글쓰기</Link>
-                </li>
-              </Fragment>
-            ) : (
-              <Fragment>
-                <li className="right">
-                  <Link to="/login">로그인</Link>
-                </li>
-              </Fragment>
-            )}
+            <LoginContext.Consumer>
+              {({ login }) => {
+                if (login) {
+                  return (
+                    <Fragment>
+                      <li className="right">
+                        <Link to="/logout">로그아웃</Link>
+                      </li>
+                      <li className="right">
+                        <Link to="/write">글쓰기</Link>
+                      </li>
+                    </Fragment>
+                  );
+                } else {
+                  return (
+                    <Fragment>
+                      <li className="right">
+                        <Link to="/login">로그인</Link>
+                      </li>
+                    </Fragment>
+                  );
+                }
+              }}
+            </LoginContext.Consumer>
           </Navbar>
         </Container>
       </StyledHeader>
@@ -121,4 +113,4 @@ class Header extends Component<any, IState> {
   }
 }
 
-export default withRouter(Header);
+export default Header;

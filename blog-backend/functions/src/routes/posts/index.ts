@@ -8,5 +8,6 @@ const Posts = Router();
 Posts.get('/list', postsCtrl.listPost);
 Posts.post('/write', authToken, postsCtrl.writePost);
 Posts.get('/:postId', postsCtrl.readPost);
+Posts.get('/update//:postId', postsCtrl.readPost);
 
 export default Posts;
