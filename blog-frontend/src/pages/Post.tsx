@@ -131,6 +131,7 @@ class Post extends Component<IProps, IState> {
           <p className="createdAt">{new Date(createdAt).toLocaleString()}</p>
         </div>
         <ReactMarkdown source={body} className="post-article" />
+        <div id="disqus_thread" />
       </PostContainer>
     );
   }

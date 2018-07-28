@@ -6,10 +6,17 @@ import { validateSchema } from '../../lib/common';
 
 const postsRef = firestore().collection('posts');
 
-export const listPost = async (_, response: Response) => {
-  postsRef.get().then(snapshot => {
-    response.json(snapshot.docs.map(doc => doc.data()));
-  });
+export const listPost = async (request: Request, response: Response) => {
+  const { start, limit } = request.params;
+
+  postsRef
+    .orderBy('id', 'desc')
+    .startAt(Number(start))
+    .limit(Number(limit))
+    .get()
+    .then(snapshot => {
+      response.json(snapshot.docs.map(doc => doc.data()));
+    });
 };
 
 export const readPost = async (request: Request, response: Response) => {
@@ -65,5 +72,33 @@ export const writePost = async (request: Request, response: Response) => {
   };
 
   postsRef.add(document);
+  response.json(document);
+};
+
+export const updatePost = async (request: Request, response: Response) => {
+  const { postId } = request.params;
+  const { title, body } = request.body;
+  const id = await postsRef
+    .where('id', '==', Number(postId))
+    .get()
+    .then(snapshot => {
+      if (snapshot.empty) {
+        response.status(404).json({
+          name: 'POST_NOT_FOUND',
+        });
+        return null;
+      }
+      return snapshot.docs[0].id;
+    });
+
+  if (!id) return;
+
+  const document = {
+    id,
+    title,
+    body,
+    date: new Date(),
+  };
+  postsRef.doc(id).update(document);
   response.json(document);
 };

@@ -23,7 +23,7 @@ class Home extends Component<IProps> {
   };
 
   public componentDidMount() {
-    client.get('/posts/list').then(response => {
+    client.get('/posts/1/1').then(response => {
       this.setState({ posts: response.data });
     });
   }

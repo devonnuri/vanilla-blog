@@ -5,9 +5,9 @@ import authToken from '../../lib/middleware/authToken';
 
 const Posts = Router();
 
-Posts.get('/list', postsCtrl.listPost);
-Posts.post('/write', authToken, postsCtrl.writePost);
+Posts.get('/:start/:limit', postsCtrl.listPost);
 Posts.get('/:postId', postsCtrl.readPost);
-Posts.get('/update//:postId', postsCtrl.readPost);
+Posts.post('/write', authToken, postsCtrl.writePost);
+Posts.post('/update/:postId', postsCtrl.updatePost);
 
 export default Posts;
