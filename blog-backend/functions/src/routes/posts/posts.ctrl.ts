@@ -6,12 +6,26 @@ import { validateSchema } from '../../lib/common';
 
 const postsRef = firestore().collection('posts');
 
+const getLastPostId = (): Promise<number> => {
+  return postsRef
+    .orderBy('id', 'desc')
+    .limit(1)
+    .get()
+    .then(snapshot => {
+      if (snapshot.empty) {
+        return 0;
+      }
+
+      return snapshot.docs[0].data().id;
+    });
+};
+
 export const listPost = async (request: Request, response: Response) => {
   const { start, limit } = request.params;
 
   postsRef
+    .where('id', '<=', (await getLastPostId()) - Number(start) + 1)
     .orderBy('id', 'desc')
-    .startAt(Number(start))
     .limit(Number(limit))
     .get()
     .then(snapshot => {
@@ -52,20 +66,8 @@ export const writePost = async (request: Request, response: Response) => {
 
   const { title, body } = request.body;
 
-  const lastPostId = await postsRef
-    .orderBy('id', 'desc')
-    .limit(1)
-    .get()
-    .then(snapshot => {
-      if (snapshot.empty) {
-        return 0;
-      }
-
-      return snapshot.docs[0].data().id;
-    });
-
   const document = {
-    id: lastPostId + 1,
+    id: (await getLastPostId()) + 1,
     title,
     body,
     createdAt: new Date(),
