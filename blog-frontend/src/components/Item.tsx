@@ -9,8 +9,8 @@ const LinkContainer = styled.a`
 const ItemContainer = styled.div`
   display: flex;
 
+  margin-top: 3rem;
   max-height: 15rem;
-  margin: 3rem 0;
 
   border-radius: 5px;
   box-shadow: 3px 3px 15px 0px black;
