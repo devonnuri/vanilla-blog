@@ -8,7 +8,6 @@ import { highlightBlock } from 'highlight.js';
 import client from '../lib/Client';
 import DisqusComments from 'src/components/DisqusComments';
 import { Location } from 'history';
-import { UserConsumer } from 'src/contexts/UserContext';
 
 const PostContainer = styled.div`
   pre code {
@@ -134,7 +133,6 @@ class Post extends Component<Props, State> {
 
     return (
       <PostContainer>
-        <UserConsumer>{(a: any) => <div>{JSON.stringify(a)}</div>}</UserConsumer>
         <div className="post-info">
           <h1>{title}</h1>
           <p className="createdAt">{new Date(createdAt).toLocaleString()}</p>

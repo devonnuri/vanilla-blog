@@ -5,6 +5,7 @@ import Item from '../components/Item';
 import removeMd from 'remove-markdown';
 
 import 'highlight.js/styles/atom-one-dark.css';
+import { InfiniteScroll } from 'src/components/InfiniteScroll';
 
 interface IPost {
   id: number;
@@ -17,41 +18,59 @@ interface Props {
   history?: any;
 }
 
-class Home extends Component<Props> {
+interface State {
+  posts: object[];
+  loaded: boolean;
+  cursor: number;
+}
+
+class Home extends Component<Props, State> {
   public state = {
     posts: [],
     loaded: false,
+    cursor: 1,
+  };
+
+  public loadMore = () => {
+    this.setState({ ...this.state, loaded: false });
+    client.get(`/posts/${this.state.cursor}/3`).then(response => {
+      this.setState({
+        posts: this.state.posts.concat(...response.data),
+        cursor: this.state.cursor + response.data.length,
+        loaded: true,
+      });
+    });
   };
 
   public componentDidMount() {
-    client
-      .get('/posts/1/1')
-      .then(response => {
-        this.setState({ posts: response.data, loaded: true });
-      })
-      .catch(error => {
-        this.setState({ ...this.state, loaded: true });
-      });
+    this.loadMore();
   }
 
   public render() {
     return (
       <div>
-        {this.state.posts.length < 1 &&
-          (this.state.loaded ? <h2>포스트가 하나도 없네요 ;)</h2> : <h2>로딩중입니다...</h2>)}
-
-        {this.state.posts
-          .slice()
-          .sort((a: IPost, b: IPost) => b.id - a.id)
-          .map((post: IPost) => (
-            <Item
-              key={post.id}
-              id={post.id}
-              title={post.title}
-              body={removeMd(post.body)}
-              createdAt={post.createdAt}
-            />
-          ))}
+        <InfiniteScroll
+          throttle={100}
+          threshold={300}
+          isLoading={!this.state.loaded}
+          hasMore={!!this.state.cursor}
+          onLoadMore={this.loadMore}
+        >
+          {this.state.posts.length > 0
+            ? this.state.posts
+                .sort((a: IPost, b: IPost) => b.id - a.id)
+                .map((post: IPost) => (
+                  <Item
+                    key={post.id}
+                    id={post.id}
+                    title={post.title}
+                    body={removeMd(post.body)}
+                    createdAt={post.createdAt}
+                  />
+                ))
+            : ''}
+        </InfiniteScroll>
+        {!this.state.loaded && <h2>로딩중입니다...</h2>}
       </div>
     );
   }
