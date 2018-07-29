@@ -25,11 +25,11 @@ export const StyledContainer = styled.div`
   }
 `;
 
-interface IProps {
+interface Props {
   children: ReactNode;
 }
 
-const Container: React.SFC<IProps> = ({ children, ...rest }) => {
+const Container: React.SFC<Props> = ({ children, ...rest }) => {
   return <StyledContainer {...rest}>{children}</StyledContainer>;
 };
 

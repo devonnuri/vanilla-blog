@@ -39,7 +39,7 @@ const Container = styled.div`
   }
 `;
 
-interface IProps {
+interface Props {
   theme?: 'default' | 'outline' | 'paper' | 'gray' | 'transparent' | 'push';
   className?: string;
   to?: null | string;
@@ -49,7 +49,7 @@ interface IProps {
   type?: any;
 }
 
-const Button: SFC<IProps> = ({ theme, children, className, to, large, fullWidth, ...rest }) => {
+const Button: SFC<Props> = ({ theme, children, className, to, large, fullWidth, ...rest }) => {
   const buttonClass = classNames('button', theme, className, {
     large,
     fullWidth,

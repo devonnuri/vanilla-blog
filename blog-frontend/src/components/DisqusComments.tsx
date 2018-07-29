@@ -24,14 +24,14 @@ function renderDisqus() {
   }
 }
 
-interface IProps {
+interface Props {
   id: string;
   title: string;
   path: string;
 }
 
-class DisqusThread extends Component<IProps> {
-  public shouldComponentUpdate(nextProps: IProps) {
+class DisqusThread extends Component<Props> {
+  public shouldComponentUpdate(nextProps: Props) {
     return (
       this.props.id !== nextProps.id ||
       this.props.title !== nextProps.title ||

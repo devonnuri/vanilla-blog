@@ -13,11 +13,11 @@ interface IPost {
   createdAt: Date;
 }
 
-interface IProps {
+interface Props {
   history?: any;
 }
 
-class Home extends Component<IProps> {
+class Home extends Component<Props> {
   public state = {
     posts: [],
     loaded: false,

@@ -7,6 +7,7 @@ import { Home, Post, Write, Login, Logout } from './pages';
 import Header from 'src/components/Header';
 import { StyledContainer } from 'src/components/Container';
 import Footer from 'src/components/Footer';
+import Provider from 'src/contexts/Provider';
 
 const RootContainer = styled.div`
   display: flex;
@@ -32,17 +33,19 @@ class App extends React.Component {
           <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js" />
         </Helmet>
 
-        <Header />
-        <BodyContainer>
-          <Route exact path="/" component={Home} />
-          <Switch>
-            <Route path="/login" component={Login} />
-            <Route path="/logout" component={Logout} />
-            <Route path="/write" component={Write} />
-            <Route path="/:postId(\d+)" component={Post} />
-          </Switch>
-        </BodyContainer>
-        <Footer />
+        <Provider>
+          <Header />
+          <BodyContainer>
+            <Route exact path="/" component={Home} />
+            <Switch>
+              <Route path="/login" component={Login} />
+              <Route path="/logout" component={Logout} />
+              <Route path="/write" component={Write} />
+              <Route path="/:postId(\d+)" component={Post} />
+            </Switch>
+          </BodyContainer>
+          <Footer />
+        </Provider>
       </RootContainer>
     );
   }

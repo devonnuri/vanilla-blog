@@ -58,7 +58,7 @@ const Body = styled.p`
 
 const CreatedAt = styled.span``;
 
-interface IProps {
+interface Props {
   id: number;
   title: string;
   body: string;
@@ -66,7 +66,7 @@ interface IProps {
   createdAt?: Date;
 }
 
-const Item: React.SFC<IProps> = ({ id, title, body, imageURL, createdAt }) => {
+const Item: React.SFC<Props> = ({ id, title, body, imageURL, createdAt }) => {
   return (
     <LinkContainer href={`/${id}`}>
       <ItemContainer>

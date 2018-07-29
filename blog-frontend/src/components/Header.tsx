@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 import Container from './Container';
-import LoginContext from '../contexts/LoginContext';
+import { UserConsumer } from '../contexts/UserContext';
 
 const StyledHeader = styled.div`
   text-align: center;
@@ -13,7 +13,7 @@ const StyledHeader = styled.div`
   background-image: linear-gradient(135deg, #f761a1 10%, #8c1bab 100%);
 `;
 
-const Title = styled.a`
+const Title = styled.div`
   margin-top: 2.5rem;
   padding: 0.5rem 1.5rem;
 
@@ -22,7 +22,7 @@ const Title = styled.a`
 
   display: inline-block;
 
-  color: inherit;
+  color: black;
   background-image: linear-gradient(
     135deg,
     rgba(255, 255, 255, 0.4) 10%,
@@ -66,11 +66,11 @@ const Navbar = styled.ul`
   }
 `;
 
-interface IState {
+interface State {
   login: boolean;
 }
 
-class Header extends Component<any, IState> {
+class Header extends Component<any, State> {
   public state = {
     login: false,
   };
@@ -78,14 +78,16 @@ class Header extends Component<any, IState> {
   public render() {
     return (
       <StyledHeader>
-        <Title href="/">DevonLog</Title>
+        <Link to="/">
+          <Title>DevonLog</Title>
+        </Link>
         <Container>
           <Navbar>
             <li>카테고리</li>
             <li>여러개</li>
-            <LoginContext.Consumer>
-              {({ login }) => {
-                if (login) {
+            <UserConsumer>
+              {({ state }: any) => {
+                if (state.login) {
                   return (
                     <Fragment>
                       <li className="right">
@@ -106,7 +108,7 @@ class Header extends Component<any, IState> {
                   );
                 }
               }}
-            </LoginContext.Consumer>
+            </UserConsumer>
           </Navbar>
         </Container>
       </StyledHeader>

@@ -8,6 +8,7 @@ import { highlightBlock } from 'highlight.js';
 import client from '../lib/Client';
 import DisqusComments from 'src/components/DisqusComments';
 import { Location } from 'history';
+import { UserConsumer } from 'src/contexts/UserContext';
 
 const PostContainer = styled.div`
   pre code {
@@ -63,12 +64,12 @@ const PostContainer = styled.div`
   }
 `;
 
-interface IProps {
+interface Props {
   match: Match<any>;
   location: Location;
 }
 
-interface IState {
+interface State {
   post: {
     title: string;
     body: string;
@@ -78,7 +79,7 @@ interface IState {
   loaded: boolean;
 }
 
-class Post extends Component<IProps, IState> {
+class Post extends Component<Props, State> {
   public state = {
     post: {
       title: '',
@@ -133,6 +134,7 @@ class Post extends Component<IProps, IState> {
 
     return (
       <PostContainer>
+        <UserConsumer>{(a: any) => <div>{JSON.stringify(a)}</div>}</UserConsumer>
         <div className="post-info">
           <h1>{title}</h1>
           <p className="createdAt">{new Date(createdAt).toLocaleString()}</p>
