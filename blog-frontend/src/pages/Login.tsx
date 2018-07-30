@@ -20,8 +20,6 @@ class Login extends Component<any, any> {
         password: this.state.password,
       })
       .then(() => {
-        //tslint:disable
-        console.log('asdf');
         this.props.setLogin(true);
         this.props.history.push('/');
       })
@@ -29,7 +27,7 @@ class Login extends Component<any, any> {
         console.error(error);
         this.setState({
           username: '',
-          password: ''
+          password: '',
         });
 
         alert('계정이 올바르지 않습니다');
@@ -48,7 +46,7 @@ class Login extends Component<any, any> {
           placeholder="사용자 이름"
           onChange={(e: any) => {
             this.setState({
-              username: e.target.value
+              username: e.target.value,
             });
           }}
           value={this.state.username}
@@ -58,7 +56,7 @@ class Login extends Component<any, any> {
           placeholder="비밀번호"
           onChange={(e: any) => {
             this.setState({
-              password: e.target.value
+              password: e.target.value,
             });
           }}
           value={this.state.password}

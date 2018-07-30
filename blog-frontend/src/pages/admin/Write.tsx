@@ -4,9 +4,9 @@ import Showdown from 'showdown';
 import styled from 'styled-components';
 
 import 'react-mde/lib/styles/css/react-mde-all.css';
-import client from '../lib/Client';
-import TextInput from '../components/TextInput';
-import Button from '../components/Button';
+import client from 'src/lib/Client';
+import TextInput from 'src/components/TextInput';
+import Button from 'src/components/Button';
 import { isHttpStatus } from 'src/lib/common';
 import { AxiosError } from 'axios';
 

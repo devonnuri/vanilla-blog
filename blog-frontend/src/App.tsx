@@ -3,7 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 import styled from 'styled-components';
 import { Helmet } from 'react-helmet';
 
-import { Home, Post, Write, Login, Logout } from './pages';
+import { Home, Post, Admin, AdminWrite, Login, Logout } from './pages';
 import Header from 'src/components/Header';
 import { StyledContainer } from 'src/components/Container';
 import Footer from 'src/components/Footer';
@@ -38,9 +38,10 @@ class App extends React.Component {
           <BodyContainer>
             <Route exact path="/" component={Home} />
             <Switch>
+              <Route exact path="/admin" component={Admin} />
+              <Route path="/admin/write" component={AdminWrite} />
               <Route path="/login" component={Login} />
               <Route path="/logout" component={Logout} />
-              <Route path="/write" component={Write} />
               <Route path="/:postId(\d+)" component={Post} />
             </Switch>
           </BodyContainer>
