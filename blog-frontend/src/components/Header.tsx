@@ -99,7 +99,10 @@ class Header extends Component<any, State> {
                         <Link to="/logout">로그아웃</Link>
                       </li>
                       <li className="right">
-                        <Link to="/write">글쓰기</Link>
+                        <Link to="/admin/write">글쓰기</Link>
+                      </li>
+                      <li className="right">
+                        <Link to="/admin">대시보드</Link>
                       </li>
                     </Fragment>
                   );
