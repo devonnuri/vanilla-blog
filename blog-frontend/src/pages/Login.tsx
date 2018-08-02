@@ -24,7 +24,6 @@ class Login extends Component<any, any> {
         this.props.history.push('/');
       })
       .catch((error: AxiosError) => {
-        console.error(error);
         this.setState({
           username: '',
           password: '',

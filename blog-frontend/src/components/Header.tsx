@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 
 import Container from './Container';
 import { UserConsumer } from '../contexts/UserContext';
+import { checkLogin } from '../lib/common';
 
 const StyledHeader = styled.div`
   text-align: center;
@@ -75,6 +76,10 @@ class Header extends Component<any, State> {
     login: false,
   };
 
+  public async componentDidMount() {
+    this.props.setLogin(await checkLogin());
+  }
+
   public render() {
     return (
       <StyledHeader>
@@ -116,4 +121,12 @@ class Header extends Component<any, State> {
   }
 }
 
-export default Header;
+export default ({ ...rest }) => {
+  return (
+    <UserConsumer>
+      {({ actions }: any) => {
+        return <Header setLogin={actions.setLogin} {...rest} />;
+      }}
+    </UserConsumer>
+  );
+};
