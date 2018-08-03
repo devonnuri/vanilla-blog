@@ -4,3 +4,4 @@ export { default as Login } from './Login';
 export { default as Logout } from './Logout';
 export { default as Admin } from './admin/Admin';
 export { default as AdminWrite } from './admin/Write';
+export { default as AdminPost } from './admin/PostManager';

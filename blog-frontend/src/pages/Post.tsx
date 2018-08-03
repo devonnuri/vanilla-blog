@@ -94,6 +94,8 @@ class Post extends Component<Props, State> {
       .get(`/posts/${this.props.match.params.postId}`)
       .then(response => {
         this.setState({ ...this.state, post: response.data, loaded: true });
+
+        document.title = this.state.post.title + ' - devon.log';
       })
       .catch(error => {
         this.setState({
