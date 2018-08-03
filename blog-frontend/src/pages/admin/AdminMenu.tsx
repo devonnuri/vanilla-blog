@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { Component } from 'react';
 import styled from 'styled-components';
 
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
+import { checkLogin } from 'src/lib/common';
 
 const LeftContainer = styled.div`
   float: left;
@@ -48,48 +49,57 @@ const Info = styled.div`
   color: #888;
 `;
 
-const AdminMenu = () => {
-  return (
-    <LeftContainer>
-      <Card>
-        <h2>DevonLog</h2>
-        <Info>
-          <div>포스트 수: 0</div>
-          <div>댓글 수: 0</div>
-          <div>조회수: 0</div>
-        </Info>
-      </Card>
+class AdminMenu extends Component<any, any> {
+  public async componentDidMount() {
+    if (!(await checkLogin())) {
+      alert('여긴 들어오시면 안되는데..');
+      this.props.history.push('/');
+    }
+  }
 
-      <Link to="/admin/write">
-        <Card className="dark" style={{ fontSize: '1.2em', textAlign: 'center' }}>
-          글쓰기
-        </Card>
-      </Link>
-
-      <Link to="/admin">
+  public render() {
+    return (
+      <LeftContainer>
         <Card>
-          <h3>대시보드 홈</h3>
+          <h2>DevonLog</h2>
+          <Info>
+            <div>포스트 수: 0</div>
+            <div>댓글 수: 0</div>
+            <div>조회수: 0</div>
+          </Info>
         </Card>
-      </Link>
 
-      <Card>
-        <h3>컨텐츠 관리</h3>
-        <ul>
-          <li>
-            <Link to="/admin/post">글 관리</Link>
-          </li>
-          <li>카테고리 관리</li>
-        </ul>
-      </Card>
+        <Link to="/admin/write">
+          <Card className="dark" style={{ fontSize: '1.2em', textAlign: 'center' }}>
+            글쓰기
+          </Card>
+        </Link>
 
-      <Card>
-        <h3>통계</h3>
-        <ul>
-          <li>방문자</li>
-        </ul>
-      </Card>
-    </LeftContainer>
-  );
-};
+        <Link to="/admin">
+          <Card>
+            <h3>대시보드 홈</h3>
+          </Card>
+        </Link>
 
-export default AdminMenu;
+        <Card>
+          <h3>컨텐츠 관리</h3>
+          <ul>
+            <li>
+              <Link to="/admin/post">글 관리</Link>
+            </li>
+            <li>카테고리 관리</li>
+          </ul>
+        </Card>
+
+        <Card>
+          <h3>통계</h3>
+          <ul>
+            <li>방문자</li>
+          </ul>
+        </Card>
+      </LeftContainer>
+    );
+  }
+}
+
+export default withRouter(AdminMenu);

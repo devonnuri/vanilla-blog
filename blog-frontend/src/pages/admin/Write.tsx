@@ -9,6 +9,16 @@ import TextInput from 'src/components/TextInput';
 import Button from 'src/components/Button';
 import { isHttpStatus } from 'src/lib/common';
 import { AxiosError } from 'axios';
+import AdminMenu from './AdminMenu';
+
+const WriteContainer = styled.div`
+  display: flex;
+  width: 100%;
+
+  form {
+    flex: 1;
+  }
+`;
 
 const ButtonSet = styled.div`
   text-align: center;
@@ -66,21 +76,24 @@ class Write extends React.Component<any, any> {
 
   public render() {
     return (
-      <form onSubmit={this.onSubmit}>
-        <h1>글쓰기</h1>
-        <TextInput type="text" placeholder="제목" onChange={this.onTitleChange} />
-        <ReactMde
-          onChange={this.onBodyChange}
-          editorState={this.state.mdeState}
-          generateMarkdownPreview={markdown => Promise.resolve(this.converter.makeHtml(markdown))}
-          layout="horizontal"
-        />
-        <ButtonSet>
-          <Button type="submit" theme="push" large>
-            글쓰기
-          </Button>
-        </ButtonSet>
-      </form>
+      <WriteContainer>
+        <AdminMenu />
+        <form onSubmit={this.onSubmit}>
+          <h1>글쓰기</h1>
+          <TextInput type="text" placeholder="제목" onChange={this.onTitleChange} />
+          <ReactMde
+            onChange={this.onBodyChange}
+            editorState={this.state.mdeState}
+            generateMarkdownPreview={markdown => Promise.resolve(this.converter.makeHtml(markdown))}
+            layout="horizontal"
+          />
+          <ButtonSet>
+            <Button type="submit" theme="push" large>
+              글쓰기
+            </Button>
+          </ButtonSet>
+        </form>
+      </WriteContainer>
     );
   }
 }

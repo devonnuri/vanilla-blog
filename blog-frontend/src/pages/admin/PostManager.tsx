@@ -1,15 +1,20 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import qs from 'query-string';
 
 import AdminMenu from './AdminMenu';
-import client from '../../lib/Client';
+import client from 'src/lib/Client';
 import Pagination from 'src/components/Pagination';
 
 const AdminContainer = styled.div`
-  margin: 2rem 0;
+  display: flex;
 `;
 
-class PostManager extends Component {
+const Content = styled.div`
+  flex: 1;
+`;
+
+class PostManager extends Component<any, any> {
   public componentDidMount() {
     client.get('/posts/1/10').then(response => {
       //tslint:disable
@@ -18,11 +23,17 @@ class PostManager extends Component {
   }
 
   public render() {
+    const query = qs.parse(this.props.location.search);
+    const page = query.page || 1;
+
     return (
       <AdminContainer>
         <AdminMenu />
-        <h1>글 관리</h1>
-        <Pagination active={1} length={5} />
+
+        <Content>
+          <h1>글 관리</h1>
+          <Pagination active={Number(page)} length={5} />
+        </Content>
       </AdminContainer>
     );
   }

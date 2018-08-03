@@ -16,6 +16,16 @@ const PageLink = styled.a`
     background-color: #3498db;
     color: white;
   }
+
+  &:first-child {
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+  }
+
+  &:last-child {
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+  }
 `;
 
 const Pagination: SFC<Props> = ({ active, length }) => {
@@ -23,7 +33,11 @@ const Pagination: SFC<Props> = ({ active, length }) => {
     <div>
       {[...Array(length).keys()].map(e => {
         return (
-          <PageLink key={e + 1} href="#" className={active === e + 1 ? 'active' : ''}>
+          <PageLink
+            key={e + 1}
+            href={`?page=${e + 1}`}
+            className={active === e + 1 ? 'active' : ''}
+          >
             {e + 1}
           </PageLink>
         );
