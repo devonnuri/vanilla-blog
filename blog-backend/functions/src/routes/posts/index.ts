@@ -5,8 +5,10 @@ import authToken from '../../lib/middleware/authToken';
 
 const Posts = Router();
 
+Posts.get('/:start/:limit/:reverse', postsCtrl.listPost);
 Posts.get('/:start/:limit', postsCtrl.listPost);
 Posts.get('/:postId', postsCtrl.readPost);
+Posts.get('/count', postsCtrl.readPost);
 Posts.post('/write', authToken, postsCtrl.writePost);
 Posts.post('/update/:postId', postsCtrl.updatePost);
 

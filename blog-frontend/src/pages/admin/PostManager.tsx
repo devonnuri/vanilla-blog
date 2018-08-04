@@ -12,27 +12,62 @@ const AdminContainer = styled.div`
 
 const Content = styled.div`
   flex: 1;
+
+  table {
+    width: 100%;
+  }
 `;
 
-class PostManager extends Component<any, any> {
+const PostTable = styled.table`
+  margin: 2rem 0;
+`;
+
+interface State {
+  page: number;
+  data: any;
+}
+
+class PostManager extends Component<any, State> {
+  public state = {
+    page: 1,
+    data: [],
+  };
+
   public componentDidMount() {
-    client.get('/posts/1/10').then(response => {
-      //tslint:disable
-      console.log(response);
+    const query = qs.parse(this.props.location.search);
+    const page = Number(query.page) || 1;
+
+    this.setState({ ...this.state, page });
+
+    client.get(`/posts/${page * 10 + 1}/10`).then(response => {
+      this.setState({ ...this.state, data: response.data });
     });
   }
 
   public render() {
-    const query = qs.parse(this.props.location.search);
-    const page = query.page || 1;
-
     return (
       <AdminContainer>
         <AdminMenu />
 
         <Content>
           <h1>글 관리</h1>
-          <Pagination active={Number(page)} length={5} />
+
+          <PostTable>
+            <tr>
+              <th>ID</th>
+              <th>제목</th>
+              <th>작성 시간</th>
+            </tr>
+            {this.state.data.map((post: any) => (
+              <tr>
+                <td>{post.id}</td>
+                <td>{post.title}</td>
+                <td>{new Date(post.createdAt).toLocaleString()}</td>
+              </tr>
+            ))}
+          </PostTable>
+
+          <Pagination active={this.state.page} length={5} />
         </Content>
       </AdminContainer>
     );

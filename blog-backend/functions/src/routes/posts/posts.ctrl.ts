@@ -25,7 +25,7 @@ export const listPost = async (request: Request, response: Response) => {
 
   postsRef
     .where('id', '<=', (await getLastPostId()) - Number(start) + 1)
-    .orderBy('id', 'desc')
+    .orderBy('id', request.params.reverse || 'asc')
     .limit(Number(limit))
     .get()
     .then(snapshot => {
@@ -103,4 +103,8 @@ export const updatePost = async (request: Request, response: Response) => {
   };
   postsRef.doc(id).update(document);
   response.json(document);
+};
+
+export const countPost = async (request: Request, response: Response) => {
+  response.json();
 };

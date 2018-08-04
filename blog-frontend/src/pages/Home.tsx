@@ -43,7 +43,7 @@ class Home extends Component<Props, State> {
 
   public loadMore = () => {
     this.setState({ ...this.state, loaded: false });
-    client.get(`/posts/${this.state.cursor}/3`).then(response => {
+    client.get(`/posts/${this.state.cursor}/3/desc`).then(response => {
       const length = response.data.length;
       if (length < 1) {
         this.setState({
