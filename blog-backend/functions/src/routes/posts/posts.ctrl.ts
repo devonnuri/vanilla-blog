@@ -106,5 +106,7 @@ export const updatePost = async (request: Request, response: Response) => {
 };
 
 export const countPost = async (request: Request, response: Response) => {
-  response.json();
+  postsRef.get().then(snapshot => {
+    response.json({ count: snapshot.size });
+  });
 };

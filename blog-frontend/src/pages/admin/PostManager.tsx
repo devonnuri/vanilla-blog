@@ -25,12 +25,14 @@ const PostTable = styled.table`
 interface State {
   page: number;
   data: any;
+  count: number;
 }
 
 class PostManager extends Component<any, State> {
   public state = {
     page: 1,
     data: [],
+    count: 1,
   };
 
   public componentDidMount() {
@@ -39,7 +41,11 @@ class PostManager extends Component<any, State> {
 
     this.setState({ ...this.state, page });
 
-    client.get(`/posts/${page * 10 + 1}/10`).then(response => {
+    client.get('/posts/count').then(response => {
+      this.setState({ ...this.state, count: response.data.count });
+    });
+
+    client.get(`/posts/${(page - 1) * 10 + 1}/10`).then(response => {
       this.setState({ ...this.state, data: response.data });
     });
   }
@@ -53,21 +59,25 @@ class PostManager extends Component<any, State> {
           <h1>글 관리</h1>
 
           <PostTable>
-            <tr>
-              <th>ID</th>
-              <th>제목</th>
-              <th>작성 시간</th>
-            </tr>
-            {this.state.data.map((post: any) => (
+            <thead>
               <tr>
-                <td>{post.id}</td>
-                <td>{post.title}</td>
-                <td>{new Date(post.createdAt).toLocaleString()}</td>
+                <th>ID</th>
+                <th>제목</th>
+                <th>작성 시간</th>
               </tr>
-            ))}
+            </thead>
+            <tbody>
+              {this.state.data.map((post: any) => (
+                <tr key={post.id}>
+                  <td>{post.id}</td>
+                  <td>{post.title}</td>
+                  <td>{new Date(post.createdAt).toLocaleString()}</td>
+                </tr>
+              ))}
+            </tbody>
           </PostTable>
 
-          <Pagination active={this.state.page} length={5} />
+          <Pagination active={this.state.page} length={Math.ceil(this.state.count / 10)} />
         </Content>
       </AdminContainer>
     );

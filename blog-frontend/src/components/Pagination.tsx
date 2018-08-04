@@ -6,6 +6,10 @@ interface Props {
   length: number;
 }
 
+const PaginationContainer = styled.div`
+  text-align: center;
+`;
+
 const PageLink = styled.a`
   padding: 0.5rem 1rem;
   border: 1px solid black;
@@ -30,7 +34,7 @@ const PageLink = styled.a`
 
 const Pagination: SFC<Props> = ({ active, length }) => {
   return (
-    <div>
+    <PaginationContainer>
       {[...Array(length).keys()].map(e => {
         return (
           <PageLink
@@ -42,7 +46,7 @@ const Pagination: SFC<Props> = ({ active, length }) => {
           </PageLink>
         );
       })}
-    </div>
+    </PaginationContainer>
   );
 };
 
