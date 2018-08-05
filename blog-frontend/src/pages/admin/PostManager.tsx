@@ -12,13 +12,10 @@ const AdminContainer = styled.div`
 
 const Content = styled.div`
   flex: 1;
-
-  table {
-    width: 100%;
-  }
 `;
 
 const PostTable = styled.table`
+  width: 100%;
   margin: 2rem 0;
 `;
 
