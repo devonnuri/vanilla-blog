@@ -8,6 +8,7 @@ import { highlightBlock } from 'highlight.js';
 import client from '../lib/Client';
 import DisqusComments from 'src/components/DisqusComments';
 import { Location } from 'history';
+import Button from 'src/components/Button';
 
 const PostContainer = styled.div`
   pre code {
@@ -15,6 +16,8 @@ const PostContainer = styled.div`
   }
 
   .post-info {
+    margin-bottom: 2rem;
+
     h1 {
       text-align: center;
       font-size: 3em;
@@ -25,7 +28,28 @@ const PostContainer = styled.div`
       color: #aaa;
     }
 
-    margin-bottom: 2rem;
+    .button-set {
+      text-align: right;
+
+      button {
+        display: inline-block;
+
+        border-right: 2px #2980b9 solid;
+        padding: 0.5rem 1.2rem;
+
+        &:first-child {
+          border-top-left-radius: 4px;
+          border-bottom-left-radius: 4px;
+        }
+
+        &:last-child {
+          border: none;
+
+          border-top-right-radius: 4px;
+          border-bottom-right-radius: 4px;
+        }
+      }
+    }
   }
 
   .post-article {
@@ -50,7 +74,7 @@ const PostContainer = styled.div`
     blockquote {
       margin: 0;
       padding: 0.5rem 1rem;
-      border-left: 3px solid #ddd;
+      border-left: 4px solid #ddd;
       font-size: 1.3em;
       p {
         margin: 0;
@@ -138,6 +162,10 @@ class Post extends Component<Props, State> {
         <div className="post-info">
           <h1>{title}</h1>
           <p className="createdAt">{new Date(createdAt).toLocaleString()}</p>
+          <div className="button-set">
+            <Button>수정</Button>
+            <Button>삭제</Button>
+          </div>
         </div>
         <ReactMarkdown source={body} className="post-article" />
         <DisqusComments
