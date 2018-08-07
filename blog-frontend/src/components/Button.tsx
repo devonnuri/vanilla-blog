@@ -1,4 +1,4 @@
-import React, { SFC, ReactNode } from 'react';
+import React, { SFC, ReactNode, DOMAttributes } from 'react';
 
 import styled from 'styled-components';
 import classNames from 'classnames';
@@ -20,6 +20,10 @@ const StyledLink = styled.a`
     background-color: #2980b9;
   }
 
+  &.green {
+    background-color: #27ae60;
+  }
+
   &.large {
     font-size: 1.25em;
     padding: 10px 30px;
@@ -30,6 +34,10 @@ const StyledLink = styled.a`
     border-radius: 5px;
     transition: all 0.1s ease-in-out;
     box-shadow: 1px 1px 10px #555;
+
+    &.green {
+      border-color: #1e8449;
+    }
 
     &:active {
       box-shadow: 1px 1px 5px #555;
@@ -45,8 +53,9 @@ const StyledLink = styled.a`
 
 const StyledButton = StyledLink.withComponent('button');
 
-interface Props {
-  theme?: 'default' | 'outline' | 'paper' | 'gray' | 'transparent' | 'push';
+interface Props extends DOMAttributes<Element> {
+  theme?: 'default' | 'outline' | 'paper' | 'push';
+  color?: 'gray' | 'green' | 'blue' | 'transparent';
   className?: string;
   to?: null | string;
   children: ReactNode;
@@ -58,6 +67,7 @@ interface Props {
 
 const Button: SFC<Props> = ({
   theme,
+  color,
   children,
   className,
   to,
@@ -66,7 +76,7 @@ const Button: SFC<Props> = ({
   inline,
   ...rest
 }) => {
-  const buttonClass = classNames('button', theme, className, {
+  const buttonClass = classNames('button', theme, color, className, {
     large,
     fullWidth,
   });

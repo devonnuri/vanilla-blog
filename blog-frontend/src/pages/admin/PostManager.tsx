@@ -17,6 +17,10 @@ const Content = styled.div`
 const PostTable = styled.table`
   width: 100%;
   margin: 2rem 0;
+
+  tr {
+    cursor: pointer;
+  }
 `;
 
 interface State {
@@ -47,6 +51,10 @@ class PostManager extends Component<any, State> {
     });
   }
 
+  public onClickRow = (id: number) => {
+    this.props.history.push(`/${id}`);
+  };
+
   public render() {
     return (
       <AdminContainer>
@@ -65,7 +73,7 @@ class PostManager extends Component<any, State> {
             </thead>
             <tbody>
               {this.state.data.map((post: any) => (
-                <tr key={post.id}>
+                <tr key={post.id} onClick={() => this.onClickRow(post.id)}>
                   <td>{post.id}</td>
                   <td>{post.title}</td>
                   <td>{new Date(post.createdAt).toLocaleString()}</td>
