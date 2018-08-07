@@ -1,8 +1,9 @@
 import { Request, Response } from '../../lib/express';
-import { firestore } from 'firebase-admin';
+import { firestore, storage } from 'firebase-admin';
+import * as gcs from '@google-cloud/storage';
 import * as Joi from 'joi';
 
-import { validateSchema } from '../../lib/common';
+import { validateSchema, guid } from '../../lib/common';
 
 const postsRef = firestore().collection('posts');
 
@@ -18,6 +19,12 @@ const getLastPostId = (): Promise<number> => {
 
       return snapshot.docs[0].data().id;
     });
+};
+
+export const countPost = async (request: Request, response: Response) => {
+  postsRef.get().then(snapshot => {
+    response.json({ count: snapshot.size });
+  });
 };
 
 export const listPost = async (request: Request, response: Response) => {
@@ -105,8 +112,24 @@ export const updatePost = async (request: Request, response: Response) => {
   response.json(document);
 };
 
-export const countPost = async (request: Request, response: Response) => {
-  postsRef.get().then(snapshot => {
-    response.json({ count: snapshot.size });
-  });
+export const uploadFile = async (request: Request, response: Response) => {
+  const buffer = new Buffer(request.body.toString('binary'), 'binary');
+  const bucket = gcs().bucket('gs://blog-6397d.appspot.com');
+  const filename = guid();
+  const file = bucket.file(filename);
+  file
+    .save(buffer)
+    .then(() => {
+      response.json({
+        name: 'UPLOAD_SUCCEED',
+        filename: filename,
+        url: `https://firebasestorage.googleapis.com/v0/b/blog-6397d.appspot.com/o/${filename}?alt=media`,
+      });
+    })
+    .catch(error => {
+      console.error(error);
+      response.status(500).json({
+        name: 'UPLOAD_FAILED',
+      });
+    });
 };
