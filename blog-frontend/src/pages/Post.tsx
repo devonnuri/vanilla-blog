@@ -80,6 +80,11 @@ const PostContainer = styled.div`
         margin: 0;
       }
     }
+
+    img {
+      width: 50%;
+      height: auto;
+    }
   }
 
   #disqus_thread {
@@ -100,6 +105,7 @@ interface State {
   };
   exists: boolean;
   loaded: boolean;
+  login: boolean;
 }
 
 class Post extends Component<Props, State> {
@@ -111,6 +117,7 @@ class Post extends Component<Props, State> {
     },
     exists: true,
     loaded: false,
+    login: false,
   };
 
   public componentDidMount() {
@@ -123,6 +130,7 @@ class Post extends Component<Props, State> {
       })
       .catch(error => {
         this.setState({
+          ...this.state,
           post: {
             title: '',
             body: '',
@@ -131,6 +139,15 @@ class Post extends Component<Props, State> {
           exists: false,
           loaded: true,
         });
+      });
+
+    client
+      .post('/auth/checklogin')
+      .then(() => {
+        this.setState({ ...this.state, login: true });
+      })
+      .catch(() => {
+        this.setState({ ...this.state, login: false });
       });
   }
 
@@ -162,10 +179,14 @@ class Post extends Component<Props, State> {
         <div className="post-info">
           <h1>{title}</h1>
           <p className="createdAt">{new Date(createdAt).toLocaleString()}</p>
-          <div className="button-set">
-            <Button>수정</Button>
-            <Button>삭제</Button>
-          </div>
+          {this.state.login ? (
+            <div className="button-set">
+              <Button>수정</Button>
+              <Button className="red">삭제</Button>
+            </div>
+          ) : (
+            ''
+          )}
         </div>
         <ReactMarkdown source={body} className="post-article" />
         <DisqusComments

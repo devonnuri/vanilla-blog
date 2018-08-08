@@ -1,5 +1,5 @@
 import { Request, Response } from '../../lib/express';
-import { firestore, storage } from 'firebase-admin';
+import { firestore } from 'firebase-admin';
 import * as gcs from '@google-cloud/storage';
 import * as Joi from 'joi';
 
@@ -113,7 +113,7 @@ export const updatePost = async (request: Request, response: Response) => {
 };
 
 export const uploadFile = async (request: Request, response: Response) => {
-  const buffer = new Buffer(request.body.toString('binary'), 'binary');
+  const buffer = request.files['file'][0].buffer;
   const bucket = gcs().bucket('gs://blog-6397d.appspot.com');
   const filename = guid();
   const file = bucket.file(filename);

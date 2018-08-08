@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactMde, { ReactMdeTypes } from 'react-mde';
+import ReactMde, { ReactMdeTypes, DraftUtil } from 'react-mde';
 import Showdown from 'showdown';
 import styled from 'styled-components';
 
@@ -10,6 +10,7 @@ import Button from 'src/components/Button';
 import { isHttpStatus } from 'src/lib/common';
 import { AxiosError } from 'axios';
 import AdminMenu from './AdminMenu';
+import { EditorState } from 'draft-js';
 
 const WriteContainer = styled.div`
   display: flex;
@@ -23,11 +24,12 @@ const WriteContainer = styled.div`
 const ButtonSet = styled.div`
   text-align: center;
 
-  padding: 2rem 0;
+  padding-top: 2rem;
 `;
 
 class Write extends React.Component<any, any> {
   public converter: Showdown.Converter;
+  private uploadRef: any;
 
   constructor(props: any) {
     super(props);
@@ -74,6 +76,50 @@ class Write extends React.Component<any, any> {
     }
   };
 
+  public generateMarkdownPreview = (markdown: string) => {
+    return Promise.resolve(this.converter.makeHtml(markdown));
+  };
+
+  public onSubmitClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+
+    if (this.uploadRef) {
+      this.uploadRef.click();
+    }
+
+    this.uploadRef.addEventListener('change', (e2: React.ChangeEvent) => {
+      const form = new FormData();
+      form.append('file', this.uploadRef.files[0]);
+
+      // tslint:disable
+      client
+        .post('/posts/upload', form)
+        .then(response => {
+          const { mdeState } = this.state;
+          const newDraftState: EditorState = DraftUtil.buildNewDraftState(
+            mdeState.draftEditorState,
+            {
+              selection: {
+                start: 0,
+                end: 0
+              },
+              text: this.state.mdeState.markdown + `\n![](${response.data.url})\n`
+            }
+          );
+          this.setState({
+            mdeState: {
+              markdown: mdeState.markdown,
+              html: mdeState.html,
+              draftEditorState: newDraftState
+            }
+          });
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    });
+  };
+
   public render() {
     return (
       <WriteContainer>
@@ -84,15 +130,22 @@ class Write extends React.Component<any, any> {
           <ReactMde
             onChange={this.onBodyChange}
             editorState={this.state.mdeState}
-            generateMarkdownPreview={markdown => Promise.resolve(this.converter.makeHtml(markdown))}
+            generateMarkdownPreview={this.generateMarkdownPreview}
             layout="horizontal"
           />
+          <ButtonSet>
+            <Button onClick={this.onSubmitClick} theme="push" color="green">
+              이미지 업로드
+            </Button>
+          </ButtonSet>
+
           <ButtonSet>
             <Button type="submit" theme="push" large>
               글쓰기
             </Button>
           </ButtonSet>
         </form>
+        <input type="file" ref={ref => (this.uploadRef = ref)} style={{ display: 'none' }} />
       </WriteContainer>
     );
   }

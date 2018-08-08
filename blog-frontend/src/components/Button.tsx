@@ -15,13 +15,24 @@ const StyledLink = styled.a`
   color: white;
   background-color: #3498db;
 
-  &:hover,
-  &:active {
+  &:hover:not(.push):not(.outline),
+  &:active:not(.push):not(.outline) {
     background-color: #2980b9;
+  }
+
+  &.outline {
+    background: none;
+    border: 2px #3498db solid;
+    color: #3498db;
+    font-weight: bold;
   }
 
   &.green {
     background-color: #27ae60;
+  }
+
+  &.red {
+    background-color: #e74c3c;
   }
 
   &.large {
@@ -55,7 +66,7 @@ const StyledButton = StyledLink.withComponent('button');
 
 interface Props extends DOMAttributes<Element> {
   theme?: 'default' | 'outline' | 'paper' | 'push';
-  color?: 'gray' | 'green' | 'blue' | 'transparent';
+  color?: 'gray' | 'green' | 'blue' | 'red' | 'transparent';
   className?: string;
   to?: null | string;
   children: ReactNode;
