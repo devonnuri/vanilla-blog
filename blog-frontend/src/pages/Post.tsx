@@ -163,6 +163,20 @@ class Post extends Component<Props, State> {
     }
   }
 
+  public onDeleteClick(e: React.MouseEvent) {
+
+    if (confirm('정말로 삭제하시겠습니까?')) {
+      const postId = this.props.match.params.id;
+      client.post(`/posts/delete/${postId}`)
+        .then(() => {
+          alert('포스트를 삭제했습니다.');
+        })
+        .catch(() => {
+          alert('포스트 삭제에 실패했습니다.');
+        })
+    }
+  }
+
   public render() {
     if (!this.state.loaded) {
       return <h2>로딩중입니다.</h2>;
@@ -182,7 +196,7 @@ class Post extends Component<Props, State> {
           {this.state.login ? (
             <div className="button-set">
               <Button>수정</Button>
-              <Button className="red">삭제</Button>
+              <Button className="red" onClick={this.onDeleteClick}>삭제</Button>
             </div>
           ) : (
             ''

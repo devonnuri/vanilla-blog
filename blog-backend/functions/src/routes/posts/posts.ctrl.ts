@@ -84,6 +84,21 @@ export const writePost = async (request: Request, response: Response) => {
   response.json(document);
 };
 
+export const deletePost = async (request: Request, response: Response) => {
+  const { postId } = request.params;
+  postsRef
+    .where('id', '==', Number(postId))
+    .get()
+    .then(snapshot => {
+      if (snapshot.empty) {
+        response.status(404).json({
+          name: 'POST_NOT_FOUND',
+        });
+      }
+      snapshot.docs[0].ref.delete();
+    });
+};
+
 export const updatePost = async (request: Request, response: Response) => {
   const { postId } = request.params;
   const { title, body } = request.body;
