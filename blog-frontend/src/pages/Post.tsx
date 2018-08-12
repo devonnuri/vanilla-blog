@@ -2,12 +2,11 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 
-import { match as Match } from 'react-router';
+import { RouteComponentProps } from 'react-router';
 import ReactMarkdown from 'react-markdown';
 import { highlightBlock } from 'highlight.js';
 import client from '../lib/Client';
 import DisqusComments from 'src/components/DisqusComments';
-import { Location } from 'history';
 import Button from 'src/components/Button';
 
 const PostContainer = styled.div`
@@ -92,9 +91,7 @@ const PostContainer = styled.div`
   }
 `;
 
-interface Props {
-  match: Match<any>;
-  location: Location;
+interface Props extends RouteComponentProps<any> {
 }
 
 interface State {
@@ -163,17 +160,17 @@ class Post extends Component<Props, State> {
     }
   }
 
-  public onDeleteClick(e: React.MouseEvent) {
-
+  public onDeleteClick = (e: React.MouseEvent) => {
     if (confirm('정말로 삭제하시겠습니까?')) {
-      const postId = this.props.match.params.id;
+      const postId = this.props.match.params.postId;
       client.post(`/posts/delete/${postId}`)
         .then(() => {
           alert('포스트를 삭제했습니다.');
+          this.props.history.push('/');
         })
         .catch(() => {
           alert('포스트 삭제에 실패했습니다.');
-        })
+        });
     }
   }
 
@@ -204,7 +201,7 @@ class Post extends Component<Props, State> {
         </div>
         <ReactMarkdown source={body} className="post-article" />
         <DisqusComments
-          id={this.props.match.params.id}
+          id={this.props.match.params.postId}
           title={title}
           path={this.props.location.pathname}
         />
