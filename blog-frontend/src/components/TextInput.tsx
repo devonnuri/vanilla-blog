@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { Component } from 'react';
 import styled from 'styled-components';
 
-const TitleInput = styled.input`
+const StyledInput = styled.input`
   width: 100%;
 
   margin: 0 0 2rem 0;
@@ -10,7 +10,7 @@ const TitleInput = styled.input`
   outline: none;
 
   font-size: 1.5em;
-  font-family: 'Noto Sans KR';
+  font-family: "Noto Sans KR";
 
   transition: all 0.3s ease-in-out;
 
@@ -19,8 +19,10 @@ const TitleInput = styled.input`
   }
 `;
 
-const TextInput = ({ ...rest }) => {
-  return <TitleInput {...rest} />;
-};
+class TextInput extends Component<any, any> {
+  public render() {
+    return <StyledInput {...this.props} />;
+  }
+}
 
 export default TextInput;

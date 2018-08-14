@@ -10,7 +10,8 @@ import {
   AdminWrite,
   AdminPost,
   Login,
-  Logout
+  Logout,
+  AdminEdit
 } from './pages';
 import Header from 'src/components/Header';
 import { StyledContainer } from 'src/components/Container';
@@ -60,7 +61,7 @@ class App extends React.Component {
             <Switch>
               <Route exact path="/admin" component={Admin} />
               <Route path="/admin/write" component={AdminWrite} />
-              <Route path="/admin/edit/:postId(\d+)" component={AdminWrite} />
+              <Route path="/admin/edit/:postId(\d+)" component={AdminEdit} />
               <Route path="/admin/post" component={AdminPost} />
               <Route path="/login" component={Login} />
               <Route path="/logout" component={Logout} />

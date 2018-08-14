@@ -7,7 +7,6 @@ import 'react-mde/lib/styles/css/react-mde-all.css';
 import client from 'src/lib/Client';
 import TextInput from 'src/components/TextInput';
 import Button from 'src/components/Button';
-import { isHttpStatus } from 'src/lib/common';
 import { AxiosError } from 'axios';
 import AdminMenu from './AdminMenu';
 import { EditorState } from 'draft-js';
@@ -72,9 +71,7 @@ class Write extends React.Component<any, any> {
             return;
           }
 
-          if (isHttpStatus(error.response.status, '4')) {
-            this.props.history.push('/login');
-          }
+          this.props.history.push('/login');
         });
     }
   };
@@ -94,9 +91,8 @@ class Write extends React.Component<any, any> {
       const form = new FormData();
       form.append('file', this.uploadRef.files[0]);
 
-      // tslint:disable
       client
-        .post("/posts/upload", form)
+        .post('/posts/upload', form)
         .then(response => {
           const { mdeState } = this.state;
           const newDraftState: EditorState = DraftUtil.buildNewDraftState(
@@ -104,22 +100,24 @@ class Write extends React.Component<any, any> {
             {
               selection: {
                 start: 0,
-                end: 0
+                end: 0,
               },
               text:
-                this.state.mdeState.markdown + `\n![](${response.data.url})\n`
+                this.state.mdeState.markdown + `\n![](${response.data.url})\n`,
             }
           );
+
           this.setState({
+            ...this.state,
             mdeState: {
               markdown: mdeState.markdown,
               html: mdeState.html,
-              draftEditorState: newDraftState
-            }
+              draftEditorState: newDraftState,
+            },
           });
         })
-        .catch(error => {
-          console.error(error);
+        .catch(() => {
+          alert('포스트를 작성하던 도중 문제가 발생하였습니다.');
         });
     });
   };
@@ -156,7 +154,7 @@ class Write extends React.Component<any, any> {
         <input
           type="file"
           ref={ref => (this.uploadRef = ref)}
-          style={{ display: "none" }}
+          style={{ display: 'none' }}
         />
       </WriteContainer>
     );
