@@ -161,6 +161,8 @@ class Post extends Component<Props, State> {
   }
 
   public onDeleteClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    
     if (confirm('정말로 삭제하시겠습니까?')) {
       const postId = this.props.match.params.postId;
       client.post(`/posts/delete/${postId}`)
