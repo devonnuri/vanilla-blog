@@ -82,7 +82,10 @@ class PostManager extends Component<any, State> {
             </tbody>
           </PostTable>
 
-          <Pagination active={this.state.page} length={Math.ceil(this.state.count / 10)} />
+          <Pagination
+            active={this.state.page}
+            length={Math.ceil(this.state.count / 10)}
+          />
         </Content>
       </AdminContainer>
     );

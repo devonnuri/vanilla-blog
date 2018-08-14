@@ -22,9 +22,14 @@ const getLastPostId = (): Promise<number> => {
 };
 
 export const countPost = async (request: Request, response: Response) => {
-  postsRef.get().then(snapshot => {
-    response.json({ count: snapshot.size });
-  });
+  postsRef
+    .get()
+    .then(snapshot => {
+      response.json({ count: snapshot.size });
+    })
+    .catch(() => {
+      response.sendStatus(500);
+    });
 };
 
 export const listPost = async (request: Request, response: Response) => {
@@ -37,6 +42,9 @@ export const listPost = async (request: Request, response: Response) => {
     .get()
     .then(snapshot => {
       response.json(snapshot.docs.map(doc => doc.data()));
+    })
+    .catch(() => {
+      response.sendStatus(500);
     });
 };
 
@@ -53,6 +61,9 @@ export const readPost = async (request: Request, response: Response) => {
       }
 
       response.json(snapshot.docs[0].data());
+    })
+    .catch(() => {
+      response.sendStatus(500);
     });
 };
 
@@ -80,8 +91,14 @@ export const writePost = async (request: Request, response: Response) => {
     createdAt: new Date(),
   };
 
-  postsRef.add(document);
-  response.json(document);
+  postsRef
+    .add(document)
+    .then(() => {
+      response.json(document);
+    })
+    .catch(() => {
+      response.sendStatus(500);
+    });
 };
 
 export const deletePost = async (request: Request, response: Response) => {
@@ -123,8 +140,16 @@ export const updatePost = async (request: Request, response: Response) => {
     body,
     date: new Date(),
   };
-  postsRef.doc(id).update(document);
-  response.json(document);
+
+  postsRef
+    .doc(id)
+    .update(document)
+    .then(() => {
+      response.json(document);
+    })
+    .catch(() => {
+      response.sendStatus(500);
+    });
 };
 
 export const uploadFile = async (request: Request, response: Response) => {

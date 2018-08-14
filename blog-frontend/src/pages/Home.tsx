@@ -9,6 +9,7 @@ import removeMd from 'remove-markdown';
 import 'highlight.js/styles/atom-one-dark.css';
 import { InfiniteScroll } from 'src/components/InfiniteScroll';
 import { PulseLoader } from 'react-spinners';
+import { RouteComponentProps } from 'react-router-dom';
 
 const LoaderContainer = styled.div`
   padding-top: 3rem;
@@ -22,9 +23,7 @@ interface IPost {
   createdAt: Date;
 }
 
-interface Props {
-  history?: any;
-}
+interface Props extends RouteComponentProps<any> {}
 
 interface State {
   posts: object[];

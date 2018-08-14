@@ -11,7 +11,7 @@ import Button from 'src/components/Button';
 
 const PostContainer = styled.div`
   pre code {
-    font-family: 'Roboto Mono';
+    font-family: "Roboto Mono";
   }
 
   .post-info {
@@ -91,8 +91,7 @@ const PostContainer = styled.div`
   }
 `;
 
-interface Props extends RouteComponentProps<any> {
-}
+interface Props extends RouteComponentProps<any> {}
 
 interface State {
   post: {
@@ -162,10 +161,11 @@ class Post extends Component<Props, State> {
 
   public onDeleteClick = (e: React.MouseEvent) => {
     e.preventDefault();
-    
+
     if (confirm('정말로 삭제하시겠습니까?')) {
       const postId = this.props.match.params.postId;
-      client.post(`/posts/delete/${postId}`)
+      client
+        .post(`/posts/delete/${postId}`)
         .then(() => {
           alert('포스트를 삭제했습니다.');
           this.props.history.push('/');
@@ -174,7 +174,7 @@ class Post extends Component<Props, State> {
           alert('포스트 삭제에 실패했습니다.');
         });
     }
-  }
+  };
 
   public render() {
     if (!this.state.loaded) {
@@ -195,7 +195,9 @@ class Post extends Component<Props, State> {
           {this.state.login ? (
             <div className="button-set">
               <Button>수정</Button>
-              <Button className="red" onClick={this.onDeleteClick}>삭제</Button>
+              <Button className="red" onClick={this.onDeleteClick}>
+                삭제
+              </Button>
             </div>
           ) : (
             ''

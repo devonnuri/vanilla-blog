@@ -39,7 +39,10 @@ class Write extends React.Component<any, any> {
       title: null,
     };
 
-    this.converter = new Showdown.Converter({ tables: true, simplifiedAutoLink: true });
+    this.converter = new Showdown.Converter({
+      tables: true,
+      simplifiedAutoLink: true,
+    });
 
     this.onTitleChange = this.onTitleChange.bind(this);
   }
@@ -93,7 +96,7 @@ class Write extends React.Component<any, any> {
 
       // tslint:disable
       client
-        .post('/posts/upload', form)
+        .post("/posts/upload", form)
         .then(response => {
           const { mdeState } = this.state;
           const newDraftState: EditorState = DraftUtil.buildNewDraftState(
@@ -103,7 +106,8 @@ class Write extends React.Component<any, any> {
                 start: 0,
                 end: 0
               },
-              text: this.state.mdeState.markdown + `\n![](${response.data.url})\n`
+              text:
+                this.state.mdeState.markdown + `\n![](${response.data.url})\n`
             }
           );
           this.setState({
@@ -126,7 +130,11 @@ class Write extends React.Component<any, any> {
         <AdminMenu />
         <form onSubmit={this.onSubmit}>
           <h1>글쓰기</h1>
-          <TextInput type="text" placeholder="제목" onChange={this.onTitleChange} />
+          <TextInput
+            type="text"
+            placeholder="제목"
+            onChange={this.onTitleChange}
+          />
           <ReactMde
             onChange={this.onBodyChange}
             editorState={this.state.mdeState}
@@ -145,7 +153,11 @@ class Write extends React.Component<any, any> {
             </Button>
           </ButtonSet>
         </form>
-        <input type="file" ref={ref => (this.uploadRef = ref)} style={{ display: 'none' }} />
+        <input
+          type="file"
+          ref={ref => (this.uploadRef = ref)}
+          style={{ display: "none" }}
+        />
       </WriteContainer>
     );
   }

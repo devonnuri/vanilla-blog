@@ -24,6 +24,7 @@
     "jsx-no-lambda": false,
     "jsx-boolean-value": false,
     "interface-name": false,
-    "no-empty": false
+    "no-empty": false,
+    "quotemark": [true, "single", "jsx-double"]
   }
 }
