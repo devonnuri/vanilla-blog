@@ -18,6 +18,12 @@ const WriteContainer = styled.div`
   form {
     flex: 1;
   }
+
+  .react-mde {
+    img {
+      width: 100%;
+    }
+  }
 `;
 
 const ButtonSet = styled.div`
@@ -80,6 +86,29 @@ class Write extends React.Component<any, any> {
     return Promise.resolve(this.converter.makeHtml(markdown));
   };
 
+  public setMdeText = (markdown: string) => {
+    const { mdeState } = this.state;
+    const newDraftState: EditorState = DraftUtil.buildNewDraftState(
+      mdeState.draftEditorState,
+      {
+        selection: {
+          start: 0,
+          end: 0,
+        },
+        text: markdown,
+      }
+    );
+
+    this.setState({
+      ...this.state,
+      mdeState: {
+        markdown: mdeState.markdown,
+        html: mdeState.html,
+        draftEditorState: newDraftState,
+      },
+    });
+  };
+
   public onSubmitClick = (e: React.MouseEvent) => {
     e.preventDefault();
 
@@ -94,27 +123,9 @@ class Write extends React.Component<any, any> {
       client
         .post('/posts/upload', form)
         .then(response => {
-          const { mdeState } = this.state;
-          const newDraftState: EditorState = DraftUtil.buildNewDraftState(
-            mdeState.draftEditorState,
-            {
-              selection: {
-                start: 0,
-                end: 0,
-              },
-              text:
-                this.state.mdeState.markdown + `\n![](${response.data.url})\n`,
-            }
+          this.setMdeText(
+            `${this.state.mdeState.markdown}\n![](${response.data.url})\n`
           );
-
-          this.setState({
-            ...this.state,
-            mdeState: {
-              markdown: mdeState.markdown,
-              html: mdeState.html,
-              draftEditorState: newDraftState,
-            },
-          });
         })
         .catch(() => {
           alert('포스트를 작성하던 도중 문제가 발생하였습니다.');
