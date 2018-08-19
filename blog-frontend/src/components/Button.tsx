@@ -5,11 +5,12 @@ import classNames from 'classnames';
 
 const StyledLink = styled.a`
   font-size: 1em;
-  font-family: 'Noto Sans KR';
+  font-family: "Noto Sans KR";
 
   padding: 5px 15px;
   border: none;
   outline: none;
+  text-decoration: none;
 
   cursor: pointer;
   color: white;

@@ -30,7 +30,7 @@ const PostContainer = styled.div`
     .button-set {
       text-align: right;
 
-      button {
+      .button {
         display: inline-block;
 
         border-right: 2px #2980b9 solid;
@@ -186,6 +186,7 @@ class Post extends Component<Props, State> {
     }
 
     const { title, body, createdAt } = this.state.post;
+    const { postId } = this.props.match.params;
 
     return (
       <PostContainer>
@@ -194,7 +195,7 @@ class Post extends Component<Props, State> {
           <p className="createdAt">{new Date(createdAt).toLocaleString()}</p>
           {this.state.login ? (
             <div className="button-set">
-              <Button>수정</Button>
+              <Button to={`/admin/edit/${postId}`}>수정</Button>
               <Button className="red" onClick={this.onDeleteClick}>
                 삭제
               </Button>
