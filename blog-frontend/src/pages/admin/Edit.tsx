@@ -76,9 +76,11 @@ class Edit extends React.Component<any, any> {
   public onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
+    const postId = this.props.match.params.postId;
+
     if (this.state.mdeState) {
       client
-        .post('/posts/write', {
+        .post(`/posts/update/${postId}`, {
           title: this.state.title,
           body: this.state.mdeState.markdown,
         })
@@ -171,7 +173,7 @@ class Edit extends React.Component<any, any> {
 
           <ButtonSet>
             <Button type="submit" theme="push" large>
-              글쓰기
+              수정하기
             </Button>
           </ButtonSet>
         </form>

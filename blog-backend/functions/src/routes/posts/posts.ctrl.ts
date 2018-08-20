@@ -35,6 +35,8 @@ export const countPost = async (request: Request, response: Response) => {
 export const listPost = async (request: Request, response: Response) => {
   const { start, limit } = request.params;
 
+  console.log(request.params);
+
   postsRef
     .where('id', '<=', (await getLastPostId()) - Number(start) + 1)
     .orderBy('id', request.params.reverse || 'asc')

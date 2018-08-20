@@ -46,7 +46,7 @@ class PostManager extends Component<any, State> {
       this.setState({ ...this.state, count: response.data.count });
     });
 
-    client.get(`/posts/${(page - 1) * 10 + 1}/10`).then(response => {
+    client.get(`/posts/${(page - 1) * 10 + 1}/10/desc`).then(response => {
       this.setState({ ...this.state, data: response.data });
     });
   }
