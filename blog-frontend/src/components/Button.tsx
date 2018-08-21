@@ -19,6 +19,10 @@ const StyledLink = styled.a`
   &:hover:not(.push):not(.outline),
   &:active:not(.push):not(.outline) {
     background-color: #2980b9;
+
+    &.red {
+      background-color: #d64435;
+    }
   }
 
   &.outline {

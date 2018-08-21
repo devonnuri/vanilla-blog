@@ -70,7 +70,10 @@ class AdminMenu extends Component<any, any> {
         </Card>
 
         <Link to="/admin/write">
-          <Card className="dark" style={{ fontSize: '1.2em', textAlign: 'center' }}>
+          <Card
+            className="dark"
+            style={{ fontSize: '1.2em', textAlign: 'center' }}
+          >
             글쓰기
           </Card>
         </Link>
@@ -87,6 +90,7 @@ class AdminMenu extends Component<any, any> {
             <li>
               <Link to="/admin/post">글 관리</Link>
             </li>
+            <li>태그 관리</li>
             <li>카테고리 관리</li>
           </ul>
         </Card>
