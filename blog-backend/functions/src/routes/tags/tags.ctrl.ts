@@ -3,7 +3,7 @@ import { firestore } from 'firebase-admin';
 import * as Joi from 'joi';
 import { validateSchema } from '../../lib/common';
 
-const tagsRef = firestore().collection('posts');
+const tagsRef = firestore().collection('tags');
 
 export const createTag = async (request: Request, response: Response) => {
   const schema = Joi.object().keys({
@@ -27,7 +27,7 @@ export const listTag = async (request: Request, response: Response) => {
   tagsRef
     .get()
     .then(snapshot => {
-      response.json(snapshot.docs);
+      response.json(snapshot.docs.map(doc => doc.data()));
     })
     .catch(() => {
       response.sendStatus(500);

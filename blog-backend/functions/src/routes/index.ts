@@ -2,12 +2,14 @@ import { Router } from 'express';
 
 import Auth from './auth';
 import Posts from './posts';
+import Tags from './tags';
 import { getFlag } from '../lib/middleware/flag';
 
 const router = Router();
 
 router.use('/auth', Auth);
 router.use('/posts', Posts);
+router.use('/tags', Tags);
 
 router.post(getFlag(), (req, res) => {
   res.writeHead(200, { 'Content-Type': 'image/bmp' });
