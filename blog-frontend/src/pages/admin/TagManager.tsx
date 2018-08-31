@@ -26,6 +26,14 @@ const TagList = styled.div`
     &:hover {
       box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
     }
+
+    &#add-tag {
+      background: none;
+      color: rgba(0, 0, 0, 0.5);
+
+      border: 3px dotted rgba(0, 0, 0, 0.19);
+      box-shadow: none;
+    }
   }
 `;
 
@@ -56,6 +64,7 @@ class TagManager extends Component<any, State> {
             {this.state.data.map((data: any) => (
               <span>{data.name}</span>
             ))}
+            <span id="add-tag">태그 만들기</span>
           </TagList>
         </Content>
       </AdminContainer>

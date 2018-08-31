@@ -14,7 +14,7 @@
 ### Backend
 * [express](expressjs.com)
 * [Firestore](https://firebase.google.com/docs/firestore/)
-* [typescript](https://ww.typescriptlang.org/)
+* [typescript](https://www.typescriptlang.org/)
 
 ### Firebase
 * Hosting(PaaS)
