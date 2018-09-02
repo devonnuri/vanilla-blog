@@ -10,8 +10,14 @@ import DisqusComments from 'src/components/DisqusComments';
 import Button from 'src/components/Button';
 
 const PostContainer = styled.div`
-  pre code {
+  code {
     font-family: "Roboto Mono";
+
+    &:not(.hljs) {
+      background-color: #eee;
+      border-radius: 5px;
+      padding: 0.1rem 0.2rem;
+    }
   }
 
   .post-info {
