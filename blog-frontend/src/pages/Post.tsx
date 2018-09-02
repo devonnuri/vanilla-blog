@@ -10,16 +10,6 @@ import DisqusComments from 'src/components/DisqusComments';
 import Button from 'src/components/Button';
 
 const PostContainer = styled.div`
-  code {
-    font-family: "Roboto Mono";
-
-    &:not(.hljs) {
-      background-color: #eee;
-      border-radius: 5px;
-      padding: 0.1rem 0.2rem;
-    }
-  }
-
   .post-info {
     margin-bottom: 2rem;
 
@@ -53,6 +43,13 @@ const PostContainer = styled.div`
           border-top-right-radius: 4px;
           border-bottom-right-radius: 4px;
         }
+      }
+    }
+
+    .tag-list {
+      color: #555;
+      span {
+        margin: 0 0.3rem;
       }
     }
   }
@@ -90,6 +87,16 @@ const PostContainer = styled.div`
       width: 100%;
       height: auto;
     }
+
+    code {
+      font-family: "Roboto Mono";
+
+      &:not(.hljs) {
+        background-color: #eee;
+        border-radius: 5px;
+        padding: 0.1rem 0.2rem;
+      }
+    }
   }
 
   #disqus_thread {
@@ -103,6 +110,7 @@ interface State {
   post: {
     title: string;
     body: string;
+    tags: string[];
     createdAt: Date;
   };
   exists: boolean;
@@ -115,6 +123,7 @@ class Post extends Component<Props, State> {
     post: {
       title: '',
       body: '',
+      tags: [],
       createdAt: new Date(0),
     },
     exists: true,
@@ -136,6 +145,7 @@ class Post extends Component<Props, State> {
           post: {
             title: '',
             body: '',
+            tags: [],
             createdAt: new Date(0),
           },
           exists: false,
@@ -191,7 +201,7 @@ class Post extends Component<Props, State> {
       return <h2>존재하지 않는 포스트입니다.</h2>;
     }
 
-    const { title, body, createdAt } = this.state.post;
+    const { title, body, createdAt, tags } = this.state.post;
     const { postId } = this.props.match.params;
 
     return (
@@ -199,6 +209,11 @@ class Post extends Component<Props, State> {
         <div className="post-info">
           <h1>{title}</h1>
           <p className="createdAt">{new Date(createdAt).toLocaleString()}</p>
+          <div className="tag-list">
+            {tags.map(tag => (
+              <span key={tag}>#{tag}</span>
+            ))}
+          </div>
           {this.state.login ? (
             <div className="button-set">
               <Button to={`/admin/edit/${postId}`}>수정</Button>

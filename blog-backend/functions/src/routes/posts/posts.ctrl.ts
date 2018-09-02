@@ -123,7 +123,7 @@ export const deletePost = async (request: Request, response: Response) => {
 
 export const updatePost = async (request: Request, response: Response) => {
   const { postId } = request.params;
-  const { title, body } = request.body;
+  const { title, body, tags } = request.body;
   const id = await postsRef
     .where('id', '==', Number(postId))
     .get()
@@ -143,6 +143,7 @@ export const updatePost = async (request: Request, response: Response) => {
     id: Number(postId),
     title,
     body,
+    tags,
     date: new Date(),
   };
 
