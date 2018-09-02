@@ -33,3 +33,19 @@ export const listTag = async (request: Request, response: Response) => {
       response.sendStatus(500);
     });
 };
+
+export const deleteTag = async (request: Request, response: Response) => {
+  tagsRef
+    .where('name', '==', request.params.tagName)
+    .get()
+    .then(snapshot => {
+      if (snapshot.empty) {
+        response.status(404).json({
+          name: 'TAG_NOT_FOUND',
+        });
+        return;
+      }
+      snapshot.docs[0].ref.delete();
+      response.sendStatus(204);
+    });
+};

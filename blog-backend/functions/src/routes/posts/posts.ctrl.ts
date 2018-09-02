@@ -113,6 +113,7 @@ export const deletePost = async (request: Request, response: Response) => {
         });
       }
       snapshot.docs[0].ref.delete();
+      response.sendStatus(204);
     });
 };
 

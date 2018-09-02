@@ -7,5 +7,6 @@ const Tags = Router();
 
 Tags.get('/', postsCtrl.listTag);
 Tags.post('/create', authToken, postsCtrl.createTag);
+Tags.post('/delete/:tagName', authToken, postsCtrl.deleteTag);
 
 export default Tags;
