@@ -42,7 +42,7 @@ export const listPost = async (request: Request, response: Response) => {
     (await getLastPostId()) - Number(start) + 1
   );
 
-  if (!authToken(request, response)) {
+  if (!(await authToken(request, response))) {
     query = query.where('secret', '==', false);
   }
 
@@ -61,7 +61,7 @@ export const listPost = async (request: Request, response: Response) => {
 export const readPost = async (request: Request, response: Response) => {
   let query = postsRef.where('id', '==', Number(request.params.postId));
 
-  if (!authToken(request, response)) {
+  if (!(await authToken(request, response))) {
     query = query.where('secret', '==', false);
   }
 
