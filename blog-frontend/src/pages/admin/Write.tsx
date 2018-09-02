@@ -3,6 +3,8 @@ import ReactMde, { ReactMdeTypes, DraftUtil } from 'react-mde';
 import Showdown from 'showdown';
 import styled from 'styled-components';
 
+import { MdCancel } from 'react-icons/md';
+
 import 'react-mde/lib/styles/css/react-mde-all.css';
 import client from 'src/lib/Client';
 import TextInput from 'src/components/TextInput';
@@ -24,12 +26,58 @@ const WriteContainer = styled.div`
       width: 100%;
     }
   }
+
+  input#tag-input {
+    font-size: 1em;
+  }
 `;
 
 const ButtonSet = styled.div`
   text-align: center;
 
   padding-top: 2rem;
+`;
+
+const TagContainer = styled.div`
+  display: flex;
+  margin: 1rem 0;
+
+  input {
+    flex: 1;
+    flex-grow: 5;
+  }
+  .button {
+    height: 100%;
+    flex: 1;
+    flex-grow: 1;
+    margin-left: 1rem;
+  }
+`;
+
+const TagList = styled.div`
+  margin: 1rem 0;
+
+  span {
+    display: inline-block;
+    margin: 0.2rem 0.4rem;
+    padding: 0.4rem 0.7rem;
+    border-radius: 15px;
+
+    background-color: #eee;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+
+    cursor: pointer;
+    transition: 0.2s box-shadow ease-in-out;
+
+    svg {
+      vertical-align: -10%;
+      margin-right: 0.2rem;
+    }
+
+    &:hover {
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+    }
+  }
 `;
 
 class Write extends React.Component<any, any> {
@@ -42,6 +90,8 @@ class Write extends React.Component<any, any> {
     this.state = {
       mdeState: null,
       title: null,
+      tagInput: '',
+      tags: [],
     };
 
     this.converter = new Showdown.Converter({
@@ -68,6 +118,7 @@ class Write extends React.Component<any, any> {
         .post('/posts/write', {
           title: this.state.title,
           body: this.state.mdeState.markdown,
+          tags: this.state.tags,
         })
         .then(response => {
           this.props.history.push(`/${response.data.id}`);
@@ -133,6 +184,33 @@ class Write extends React.Component<any, any> {
     });
   };
 
+  public onTagRemove = (e: any) => {
+    const itemText = e.target.parentNode.parentNode.innerText;
+
+    this.setState({
+      ...this.state,
+      tags: this.state.tags.filter((data: any) => data !== itemText),
+    });
+  };
+
+  public onTagChange = (e: any) => {
+    this.setState({ ...this.state, tagInput: e.target.value });
+  };
+
+  public onTagCreate = (e: any) => {
+    e.preventDefault();
+
+    if (this.state.tags.includes(this.state.tagInput)) {
+      alert('이미 존재하는 태그입니다.');
+      return;
+    }
+
+    this.setState({
+      ...this.state,
+      tags: [...this.state.tags, this.state.tagInput],
+    });
+  };
+
   public render() {
     return (
       <WriteContainer>
@@ -140,10 +218,28 @@ class Write extends React.Component<any, any> {
         <form onSubmit={this.onSubmit}>
           <h1>글쓰기</h1>
           <TextInput
+            id="title-input"
             type="text"
             placeholder="제목"
             onChange={this.onTitleChange}
           />
+          <TagContainer>
+            <TextInput
+              id="tag-input"
+              placeholder="태그"
+              value={this.state.tagInput}
+              onChange={this.onTagChange}
+            />
+            <Button onClick={this.onTagCreate}>태그 추가</Button>
+          </TagContainer>
+          <TagList>
+            {this.state.tags.map((data: any) => (
+              <span key={data}>
+                <MdCancel onClick={this.onTagRemove} />
+                {data}
+              </span>
+            ))}
+          </TagList>
           <ReactMde
             onChange={this.onBodyChange}
             editorState={this.state.mdeState}

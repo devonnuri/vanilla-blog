@@ -11,8 +11,7 @@ import {
   AdminPost,
   Login,
   Logout,
-  AdminEdit,
-  AdminTag
+  AdminEdit
 } from './pages';
 import Header from 'src/components/Header';
 import { StyledContainer } from 'src/components/Container';
@@ -64,7 +63,6 @@ class App extends React.Component {
               <Route path="/admin/write" component={AdminWrite} />
               <Route path="/admin/edit/:postId(\d+)" component={AdminEdit} />
               <Route path="/admin/post" component={AdminPost} />
-              <Route path="/admin/tag" component={AdminTag} />
               <Route path="/login" component={Login} />
               <Route path="/logout" component={Logout} />
               <Route path="/:postId(\d+)" component={Post} />

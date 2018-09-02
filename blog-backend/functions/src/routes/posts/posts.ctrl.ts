@@ -76,18 +76,22 @@ export const writePost = async (request: Request, response: Response) => {
     body: Joi.string()
       .required()
       .min(1),
+    tags: Joi.array()
+      .items(Joi.string())
+      .required(),
   });
 
   if (!validateSchema(request, response, schema)) {
     return;
   }
 
-  const { title, body } = request.body;
+  const { title, body, tags } = request.body;
 
   const document = {
     id: (await getLastPostId()) + 1,
     title,
     body,
+    tags,
     createdAt: new Date(),
   };
 

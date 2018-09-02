@@ -1,9 +1,17 @@
 import React, { Component } from 'react';
+import styled from 'styled-components';
+
 import TextInput from 'src/components/TextInput';
 import Button from 'src/components/Button';
 import client from '../lib/Client';
 import { AxiosError } from 'axios';
 import { UserConsumer } from '../contexts/UserContext';
+
+const LoginContainer = styled.form`
+  input {
+    margin-bottom: 1rem;
+  }
+`;
 
 class Login extends Component<any, any> {
   public state = {
@@ -35,7 +43,7 @@ class Login extends Component<any, any> {
 
   public render() {
     return (
-      <form onSubmit={this.onSubmit}>
+      <LoginContainer onSubmit={this.onSubmit}>
         <h1>로그인</h1>
         <p>
           <i>이거 성공하면 ㄹㅇ 킹갓해커 되는거임?</i>
@@ -63,7 +71,7 @@ class Login extends Component<any, any> {
         <Button theme="push" type="submit" large fullWidth>
           로그인
         </Button>
-      </form>
+      </LoginContainer>
     );
   }
 }

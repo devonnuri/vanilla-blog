@@ -6,4 +6,3 @@ export { default as Admin } from './admin/Admin';
 export { default as AdminWrite } from './admin/Write';
 export { default as AdminEdit } from './admin/Edit';
 export { default as AdminPost } from './admin/PostManager';
-export { default as AdminTag } from './admin/TagManager';
