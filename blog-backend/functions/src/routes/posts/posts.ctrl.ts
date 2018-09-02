@@ -79,19 +79,21 @@ export const writePost = async (request: Request, response: Response) => {
     tags: Joi.array()
       .items(Joi.string())
       .required(),
+    secret: Joi.boolean(),
   });
 
   if (!validateSchema(request, response, schema)) {
     return;
   }
 
-  const { title, body, tags } = request.body;
+  const { title, body, tags, secret } = request.body;
 
   const document = {
     id: (await getLastPostId()) + 1,
     title,
     body,
     tags,
+    secret,
     createdAt: new Date(),
   };
 
@@ -123,7 +125,8 @@ export const deletePost = async (request: Request, response: Response) => {
 
 export const updatePost = async (request: Request, response: Response) => {
   const { postId } = request.params;
-  const { title, body, tags } = request.body;
+  const { title, body, tags, secret } = request.body;
+
   const id = await postsRef
     .where('id', '==', Number(postId))
     .get()
@@ -144,6 +147,7 @@ export const updatePost = async (request: Request, response: Response) => {
     title,
     body,
     tags,
+    secret,
     date: new Date(),
   };
 
