@@ -8,6 +8,7 @@ import { MdCancel } from 'react-icons/md';
 import 'react-mde/lib/styles/css/react-mde-all.css';
 import client from 'src/lib/Client';
 import TextInput from 'src/components/TextInput';
+import ToggleSwitch from 'src/components/ToggleSwitch';
 import Button from 'src/components/Button';
 import { AxiosError } from 'axios';
 import AdminMenu from './AdminMenu';
@@ -92,6 +93,7 @@ class Write extends React.Component<any, any> {
       title: null,
       tagInput: '',
       tags: [],
+      secret: false,
     };
 
     this.converter = new Showdown.Converter({
@@ -119,6 +121,7 @@ class Write extends React.Component<any, any> {
           title: this.state.title,
           body: this.state.mdeState.markdown,
           tags: this.state.tags,
+          secret: this.state.secret,
         })
         .then(response => {
           this.props.history.push(`/${response.data.id}`);
@@ -211,6 +214,10 @@ class Write extends React.Component<any, any> {
     });
   };
 
+  public onSecretChange = (e: any) => {
+    this.setState({ ...this.state, secret: e.target.checked });
+  };
+
   public render() {
     return (
       <WriteContainer>
@@ -240,6 +247,13 @@ class Write extends React.Component<any, any> {
               </span>
             ))}
           </TagList>
+          <ToggleSwitch
+            onChange={this.onSecretChange}
+            value={this.state.secret}
+            style={{ marginBottom: '1rem' }}
+          >
+            비밀글
+          </ToggleSwitch>
           <ReactMde
             onChange={this.onBodyChange}
             editorState={this.state.mdeState}

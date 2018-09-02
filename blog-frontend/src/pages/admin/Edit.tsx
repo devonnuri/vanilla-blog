@@ -12,6 +12,7 @@ import Button from 'src/components/Button';
 import { AxiosError } from 'axios';
 import AdminMenu from './AdminMenu';
 import { EditorState } from 'draft-js';
+import ToggleSwitch from 'src/components/ToggleSwitch';
 
 const EditContainer = styled.div`
   display: flex;
@@ -92,6 +93,7 @@ class Edit extends React.Component<any, any> {
       title: '',
       tagInput: '',
       tags: [],
+      secret: false,
     };
 
     this.converter = new Showdown.Converter({
@@ -107,13 +109,14 @@ class Edit extends React.Component<any, any> {
     client
       .get(`/posts/${postId}`)
       .then(response => {
-        const { title, body, tags } = response.data;
+        const { title, body, tags, secret } = response.data;
 
         this.setMdeText(body);
         this.setState({
           ...this.state,
           title,
           tags,
+          secret,
         });
       })
       .catch(() => {
@@ -140,6 +143,7 @@ class Edit extends React.Component<any, any> {
           title: this.state.title,
           body: this.state.mdeState.markdown,
           tags: this.state.tags,
+          secret: this.state.secret,
         })
         .then(response => {
           this.props.history.push(`/${response.data.id}`);
@@ -232,6 +236,10 @@ class Edit extends React.Component<any, any> {
     });
   };
 
+  public onSecretChange = (e: any) => {
+    this.setState({ ...this.state, secret: e.target.checked });
+  };
+
   public render() {
     return (
       <EditContainer>
@@ -261,6 +269,13 @@ class Edit extends React.Component<any, any> {
               </span>
             ))}
           </TagList>
+          <ToggleSwitch
+            onChange={this.onSecretChange}
+            value={this.state.secret}
+            style={{ marginBottom: '1rem' }}
+          >
+            비밀글
+          </ToggleSwitch>
           <ReactMde
             onChange={this.onBodyChange}
             editorState={this.state.mdeState}

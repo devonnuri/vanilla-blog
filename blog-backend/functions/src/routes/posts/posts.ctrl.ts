@@ -4,6 +4,7 @@ import * as gcs from '@google-cloud/storage';
 import * as Joi from 'joi';
 
 import { validateSchema, guid } from '../../lib/common';
+import authToken from '../../lib/middleware/authToken';
 
 const postsRef = firestore().collection('posts');
 
@@ -35,8 +36,17 @@ export const countPost = async (request: Request, response: Response) => {
 export const listPost = async (request: Request, response: Response) => {
   const { start, limit } = request.params;
 
-  postsRef
-    .where('id', '<=', (await getLastPostId()) - Number(start) + 1)
+  let query = postsRef.where(
+    'id',
+    '<=',
+    (await getLastPostId()) - Number(start) + 1
+  );
+
+  if (!authToken(request, response)) {
+    query = query.where('secret', '==', false);
+  }
+
+  query
     .orderBy('id', request.params.reverse || 'asc')
     .limit(Number(limit))
     .get()
@@ -49,8 +59,13 @@ export const listPost = async (request: Request, response: Response) => {
 };
 
 export const readPost = async (request: Request, response: Response) => {
-  postsRef
-    .where('id', '==', Number(request.params.postId))
+  let query = postsRef.where('id', '==', Number(request.params.postId));
+
+  if (!authToken(request, response)) {
+    query = query.where('secret', '==', false);
+  }
+
+  query
     .get()
     .then(snapshot => {
       if (snapshot.empty) {
