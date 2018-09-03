@@ -3,7 +3,9 @@ import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 
 import { RouteComponentProps } from 'react-router';
+import { Helmet } from 'react-helmet';
 import ReactMarkdown from 'react-markdown';
+import removeMd from 'remove-markdown';
 import { highlightBlock } from 'highlight.js';
 import client from '../lib/Client';
 import DisqusComments from 'src/components/DisqusComments';
@@ -136,8 +138,6 @@ class Post extends Component<Props, State> {
       .get(`/posts/${this.props.match.params.postId}`)
       .then(response => {
         this.setState({ ...this.state, post: response.data, loaded: true });
-
-        document.title = this.state.post.title + ' - devon.log';
       })
       .catch(error => {
         this.setState({
@@ -206,6 +206,13 @@ class Post extends Component<Props, State> {
 
     return (
       <PostContainer>
+        <Helmet>
+          <title>{this.state.post.title} - devon.log</title>
+          <meta
+            name="Description"
+            content={removeMd(this.state.post.body).substring(0, 200)}
+          />
+        </Helmet>
         <div className="post-info">
           <h1>{title}</h1>
           <p className="createdAt">{new Date(createdAt).toLocaleString()}</p>

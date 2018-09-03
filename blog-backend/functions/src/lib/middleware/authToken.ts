@@ -1,28 +1,10 @@
 import { Request, Response } from '../express';
-import { decode } from '../token';
+import { checkToken } from '../common';
 
-export default async (
-  request: Request,
-  response: Response,
-  next: Function | undefined = undefined
-) => {
-  const token = request.cookies['access_token'];
-
-  if (!token) {
-    request.user = null;
+export default async (request: Request, response: Response, next: Function) => {
+  if (!(await checkToken(request))) {
     response.sendStatus(401);
-    return;
-  }
-
-  try {
-    const decoded: any = await decode(token);
-    const { user, exp } = decoded;
-
-    request.user = user;
-    request.tokenExpire = new Date(exp * 1000);
-    if (next) next();
-  } catch (e) {
-    request.user = null;
-    response.sendStatus(401);
+  } else {
+    next();
   }
 };

@@ -3,8 +3,7 @@ import { firestore } from 'firebase-admin';
 import * as gcs from '@google-cloud/storage';
 import * as Joi from 'joi';
 
-import { validateSchema, guid } from '../../lib/common';
-import authToken from '../../lib/middleware/authToken';
+import { validateSchema, guid, checkToken } from '../../lib/common';
 
 const postsRef = firestore().collection('posts');
 
@@ -42,7 +41,7 @@ export const listPost = async (request: Request, response: Response) => {
     (await getLastPostId()) - Number(start) + 1
   );
 
-  if (!(await authToken(request, response))) {
+  if (!(await checkToken(request))) {
     query = query.where('secret', '==', false);
   }
 
@@ -53,7 +52,8 @@ export const listPost = async (request: Request, response: Response) => {
     .then(snapshot => {
       response.json(snapshot.docs.map(doc => doc.data()));
     })
-    .catch(() => {
+    .catch(error => {
+      console.error(error);
       response.sendStatus(500);
     });
 };
@@ -61,7 +61,7 @@ export const listPost = async (request: Request, response: Response) => {
 export const readPost = async (request: Request, response: Response) => {
   let query = postsRef.where('id', '==', Number(request.params.postId));
 
-  if (!(await authToken(request, response))) {
+  if (!(await checkToken(request))) {
     query = query.where('secret', '==', false);
   }
 
