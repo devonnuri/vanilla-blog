@@ -91,6 +91,7 @@ export const writePost = async (request: Request, response: Response) => {
     body: Joi.string()
       .required()
       .min(1),
+    category: Joi.string(),
     tags: Joi.array()
       .items(Joi.string())
       .required(),
