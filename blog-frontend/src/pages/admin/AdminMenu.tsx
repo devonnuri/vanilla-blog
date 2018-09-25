@@ -90,7 +90,9 @@ class AdminMenu extends Component<any, any> {
             <li>
               <Link to="/admin/post">글 관리</Link>
             </li>
-            <li>카테고리 관리</li>
+            <li>
+              <Link to="/admin/category">카테고리 관리</Link>
+            </li>
           </ul>
         </Card>
 

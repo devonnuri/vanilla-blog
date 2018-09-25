@@ -11,19 +11,19 @@ export const createCategory = (request: Request, response: Response) => {
       .required()
       .min(1)
       .max(50),
-    root: Joi.string(),
-    secret: Joi.boolean(),
+    parent: Joi.string().required(),
+    secret: Joi.boolean().required(),
   });
 
   if (!validateSchema(request, response, schema)) {
     return;
   }
 
-  const { name, root, secret } = request.body;
+  const { name, parent, secret } = request.body;
 
   const document = {
     name,
-    root,
+    parent,
     secret,
   };
 
@@ -33,6 +33,35 @@ export const createCategory = (request: Request, response: Response) => {
       response.json(document);
     })
     .catch(() => {
+      response.sendStatus(500);
+    });
+};
+
+export const readCategory = (request: Request, response: Response) => {
+  const { parent } = request.params;
+
+  let querySnapshot = categoriesRef.get();
+
+  if (parent) {
+    querySnapshot = categoriesRef.where('parent', '==', parent).get();
+  }
+
+  querySnapshot
+    .then(snapshot => {
+      response.json(
+        snapshot.docs.map(doc => {
+          const { name, parent, secret } = doc.data();
+          return {
+            id: doc.id,
+            name,
+            parent,
+            secret,
+          };
+        })
+      );
+    })
+    .catch(error => {
+      console.error(error);
       response.sendStatus(500);
     });
 };
