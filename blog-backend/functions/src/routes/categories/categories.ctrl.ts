@@ -50,12 +50,9 @@ export const readCategory = (request: Request, response: Response) => {
     .then(snapshot => {
       response.json(
         snapshot.docs.map(doc => {
-          const { name, parent, secret } = doc.data();
           return {
+            ...doc.data(),
             id: doc.id,
-            name,
-            parent,
-            secret,
           };
         })
       );

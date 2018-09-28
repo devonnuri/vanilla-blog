@@ -18,23 +18,12 @@ interface State {
 
 class CategoryManager extends Component<any, State> {
   public state = {
-    data: {},
+    data: [],
   };
 
   public componentDidMount() {
     client.get('/categories/ROOT').then(response => {
-      const categories = response.data;
-      categories.forEach((e: any) => {
-        this.setState({ data: this.state.data.concat(e.data) });
-      });
-    });
-  }
-
-  public addCategory(parent: string, next: any[]) {
-    client.get(`/categories/${parent}`).then(response => {
-      response.data.forEach((e: any) => {
-        
-      });
+      this.setState({ data: response.data });
     });
   }
 
@@ -48,7 +37,7 @@ class CategoryManager extends Component<any, State> {
 
           <ul>
             {this.state.data.map((category: any) => (
-              <li>
+              <li key={category.id}>
                 {category.secret ? '🔒 ' : ''}
                 {category.name}
               </li>

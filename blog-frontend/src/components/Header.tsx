@@ -30,7 +30,7 @@ const Title = styled.div`
     rgba(255, 255, 255, 0.7) 100%
   );
 
-  font-family: 'Lobster';
+  font-family: "Lobster";
   font-weight: normal;
   font-size: 4em;
   text-decoration: none;

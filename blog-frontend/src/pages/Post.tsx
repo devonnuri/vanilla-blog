@@ -209,10 +209,12 @@ class Post extends Component<Props, State> {
         <Helmet>
           <title>{this.state.post.title} - devon.log</title>
           <meta
-            name="Description"
-            content={removeMd(this.state.post.body)
-              .replace(/\n/g, ' ')
-              .substring(0, 200)}
+            name="description"
+            content={
+              removeMd(this.state.post.body)
+                .replace(/\n/g, ' ')
+                .substring(0, 150) + '...'
+            }
           />
         </Helmet>
         <div className="post-info">
