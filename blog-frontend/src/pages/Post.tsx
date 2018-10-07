@@ -236,7 +236,7 @@ class Post extends Component<Props, State> {
             ''
           )}
         </div>
-        <ReactMarkdown source={body} className="post-article" />
+        <ReactMarkdown source={body} escapeHtml={false} className="post-article" />
         <DisqusComments
           id={this.props.match.params.postId}
           title={title}
